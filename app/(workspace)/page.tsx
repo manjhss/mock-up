@@ -1,5 +1,5 @@
-import { ComponentExample } from "@/components/component-example";
+import PreviewView from "@/features/preview/components/preview-view";
 
 export default function Page() {
-  return <ComponentExample />;
+  return <PreviewView />;
 }
