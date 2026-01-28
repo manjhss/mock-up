@@ -12,6 +12,8 @@ import { ModeToggle } from "./mode-toggle";
 import { Separator } from "./ui/separator";
 import Icon from "./icon";
 import { CleanIcon } from "@hugeicons/core-free-icons";
+import { AlertDialog, AlertDialogTrigger } from "./ui/alert-dialog";
+import ClearDraftDialogContent from "./clear-draft-dialog";
 
 export default function AppSidebar() {
   return (
@@ -32,9 +34,14 @@ export default function AppSidebar() {
       <Separator />
 
       <SidebarFooter>
-        <Button variant={"destructive"} size={"lg"}>
-          <Icon icon={CleanIcon}/> Clear Draft
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <Button variant={"destructive"} size={"lg"} className={"w-full"}>
+              <Icon icon={CleanIcon} /> Clear Draft
+            </Button>
+          </AlertDialogTrigger>
+          <ClearDraftDialogContent />
+        </AlertDialog>
       </SidebarFooter>
     </Sidebar>
   );
