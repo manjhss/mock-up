@@ -10,6 +10,8 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./mode-toggle";
 import { Separator } from "./ui/separator";
+import Icon from "./icon";
+import { CleanIcon } from "@hugeicons/core-free-icons";
 
 export default function AppSidebar() {
   return (
@@ -31,7 +33,7 @@ export default function AppSidebar() {
 
       <SidebarFooter>
         <Button variant={"destructive"} size={"lg"}>
-          Clear Draft
+          <Icon icon={CleanIcon}/> Clear Draft
         </Button>
       </SidebarFooter>
     </Sidebar>
