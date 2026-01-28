@@ -22,7 +22,7 @@ const devices = [
 export default function Header() {
   return (
     <header className="sticky top-0 z-10 bg-sidebar p-2 flex items-center justify-between border-b border-sidebar-border">
-      <div className="flex items-center gap-2">
+      <div className="flex-1 flex items-center gap-2">
         <Select items={devices} defaultValue={"website"}>
           <SelectTrigger id="device-select" className="w-38">
             <SelectValue placeholder="Select a device" />
