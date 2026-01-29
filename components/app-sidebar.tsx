@@ -5,6 +5,8 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
+  SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { Button } from "./ui/button";
@@ -16,28 +18,35 @@ import { AlertDialog, AlertDialogTrigger } from "./ui/alert-dialog";
 import ClearDraftDialogContent from "./clear-draft-dialog";
 
 export default function AppSidebar() {
+  const { state } = useSidebar();
+  const isCollapsed = state === "collapsed";
+
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarHeader>
-        <div className="flex items-center justify-between">
+        <SidebarTrigger />
+
+        {/* <div className="flex items-center justify-between">
           <Image src={"/vercel.svg"} alt="Logo" width={32} height={32} />
           <ModeToggle />
-        </div>
+        </div> */}
       </SidebarHeader>
 
       <Separator />
 
-      <SidebarContent>
-        <Content />
-      </SidebarContent>
+      <SidebarContent>{/* <Content /> */}</SidebarContent>
 
       <Separator />
 
       <SidebarFooter>
         <AlertDialog>
           <AlertDialogTrigger>
-            <Button variant={"destructive"} size={"lg"} className={"w-full"}>
-              <Icon icon={CleanIcon} /> Clear Draft
+            <Button
+              variant={"destructive"}
+              size={isCollapsed ? "icon-lg" : "lg"}
+              className={"w-full"}
+            >
+              <Icon icon={CleanIcon} /> {!isCollapsed && "Clear Drafts"}
             </Button>
           </AlertDialogTrigger>
           <ClearDraftDialogContent />
