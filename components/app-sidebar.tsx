@@ -8,9 +8,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import Image from "next/image";
 import { Button } from "./ui/button";
-import { ModeToggle } from "./mode-toggle";
 import { Separator } from "./ui/separator";
 import Icon from "./icon";
 import { CleanIcon } from "@hugeicons/core-free-icons";
@@ -25,11 +23,6 @@ export default function AppSidebar() {
     <Sidebar variant="floating" collapsible="icon">
       <SidebarHeader>
         <SidebarTrigger />
-
-        {/* <div className="flex items-center justify-between">
-          <Image src={"/vercel.svg"} alt="Logo" width={32} height={32} />
-          <ModeToggle />
-        </div> */}
       </SidebarHeader>
 
       <Separator />
@@ -46,7 +39,7 @@ export default function AppSidebar() {
               size={isCollapsed ? "icon-lg" : "lg"}
               className={"w-full"}
             >
-              <Icon icon={CleanIcon} /> {!isCollapsed && "Clear Drafts"}
+              <Icon icon={CleanIcon} /> {!isCollapsed && "Clear Draft"}
             </Button>
           </AlertDialogTrigger>
           <ClearDraftDialogContent />
