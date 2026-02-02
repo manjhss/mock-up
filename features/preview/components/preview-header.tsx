@@ -9,7 +9,7 @@ import {
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import Image from "next/image";
 
-export default function Header() {
+export default function PreviewHeader() {
   return (
     <header className="sticky top-0 z-10 bg-sidebar p-2 flex gap-2 items-center justify-between border-b border-sidebar-border">
       <Image src={"/vercel.svg"} alt="Logo" width={32} height={32} />

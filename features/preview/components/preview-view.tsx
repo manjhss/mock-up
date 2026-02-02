@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "./header";
+import PreviewHeader from "./preview-header";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PreviewList from "./preview-list";
 import {
@@ -10,7 +10,7 @@ import {
 import Icon from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import Footer from "./footer";
+import Footer from "../../../components/footer";
 
 const tabs = [
   { value: "all", label: "All" },
@@ -24,10 +24,10 @@ export default function PreviewView() {
   );
 
   return (
-    <div>
-      <Header />
+    <div className="flex flex-col h-full overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <PreviewHeader />
 
-      <Tabs defaultValue="all" className="w-full bg-sidebar">
+      <Tabs defaultValue="all" className="flex-1 w-full bg-sidebar">
         <div className="p-2.25 sticky top-12.25 z-10 flex bg-sidebar">
           <div className="flex-1 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <TabsList variant={"line"}>
