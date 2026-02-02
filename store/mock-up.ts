@@ -14,6 +14,7 @@ interface State {
 interface Actions {
   setHydrated: () => void;
   setTempMockUp: (mockUp: MockUp) => void;
+  clearTempMockUp: () => void;
   setUserMockUps: (mockUps: MockUps) => void;
 }
 
@@ -42,6 +43,11 @@ export const useMockUp = create<Store>()(
       setTempMockUp: (mockUp: MockUp) =>
         set((state) => {
           state.tempMockUp = mockUp;
+        }),
+
+      clearTempMockUp: () =>
+        set((state) => {
+          state.tempMockUp = null as unknown as MockUp;
         }),
 
       setUserMockUps: (mockUps: MockUps) =>
