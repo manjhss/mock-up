@@ -58,27 +58,18 @@ export const SlideSchema = z
   .object({
     id: z.string().min(1).describe("Unique identifier for the slide"),
     logo: z.object({
-      content: z.string().url().optional().describe("Logo image URL"),
+      content: z.string().url().describe("Logo image URL"),
       style: StyleSchema.optional().describe("Logo styling options"),
     }),
     heading: z.object({
-      content: z
-        .string()
-        .min(1)
-        .max(200)
-        .optional()
-        .describe("Slide heading/title"),
+      content: z.string().max(200).describe("Slide heading/title"),
       style: StyleSchema.optional().describe("Heading text styling"),
     }),
     description: z.object({
-      content: z
-        .string()
-        .max(1000)
-        .optional()
-        .describe("Slide description or content"),
+      content: z.string().max(1000).describe("Slide description or content"),
       style: StyleSchema.optional().describe("Description text styling"),
     }),
-    image: ImageSchema.optional().describe("Image on the slide"),
+    media: ImageSchema.describe("Media on the slide"),
   })
   .strict();
 
@@ -99,23 +90,36 @@ export const SlidesSchema = z
  */
 export const MockUpSchema = z
   .object({
-    id: z.string().min(1).describe("Unique identifier for the preset"),
+    id: z
+      .string()
+      .min(1)
+      .optional()
+      .describe("Unique identifier for the preset"),
     nickname: z
       .string()
       .min(1)
       .max(50)
+      .optional()
       .describe("Short nickname for the preset"),
-    name: z.string().min(1).max(100).describe("Human-readable preset name"),
+    name: z
+      .string()
+      .min(1)
+      .max(100)
+      .optional()
+      .describe("Human-readable preset name"),
     slides: SlidesSchema.describe("Collection of slides in this preset"),
-    resources: z.object({
-      background: z
-        .array(ImageSchema)
-        .default([])
-        .describe("Background image on the slide"),
-    }),
+    resources: z
+      .object({
+        background: z
+          .array(ImageSchema)
+          .default([])
+          .describe("Background image on the slide"),
+      })
+      .optional(),
     tags: z
       .array(z.string().min(1))
       .default([])
+      .optional()
       .describe("Tags for the preset"),
   })
   .strict();

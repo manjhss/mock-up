@@ -8,12 +8,16 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import Icon from "./icon";
+import { Button } from "../../../components/ui/button";
+import { Separator } from "../../../components/ui/separator";
+import Icon from "../../../components/icon";
 import { CleanIcon } from "@hugeicons/core-free-icons";
-import { AlertDialog, AlertDialogTrigger } from "./ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+} from "../../../components/ui/alert-dialog";
 import ClearDraftDialogContent from "./clear-draft-dialog";
+import MockUpForm from "./mock-up-form/form";
 
 export default function AppSidebar() {
   const { state } = useSidebar();
@@ -27,7 +31,9 @@ export default function AppSidebar() {
 
       <Separator />
 
-      <SidebarContent>{/* <Content /> */}</SidebarContent>
+      <SidebarContent>
+        <Content />
+      </SidebarContent>
 
       <Separator />
 
@@ -51,10 +57,13 @@ export default function AppSidebar() {
 
 function Content() {
   return (
-    <div>
-      <h4 className="text-sm text-muted-foreground">Pages</h4>
+    <div className="space-y-4">
+      <h4 className="pt-2 text-sm text-muted-foreground font-semibold">
+        Slides
+      </h4>
 
       {/* Pages Form */}
+      <MockUpForm />
     </div>
   );
 }

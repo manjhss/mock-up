@@ -9,9 +9,19 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { CleanIcon } from "@hugeicons/core-free-icons";
-import Icon from "./icon";
+import Icon from "../../../components/icon";
+import { useMockUp } from "@/store/mock-up";
+import { useUI } from "@/store/ui";
 
 export default function ClearDraftDialogContent() {
+  const { clearTempMockUp } = useMockUp();
+  const { setExpandedSlides } = useUI();
+
+  const handleClear = () => {
+    clearTempMockUp();
+    setExpandedSlides(new Set([0]));
+  };
+
   return (
     <AlertDialogContent size="default">
       <AlertDialogHeader className="flex flex-col">
@@ -26,7 +36,7 @@ export default function ClearDraftDialogContent() {
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel>Cancel</AlertDialogCancel>
-        <AlertDialogAction>Clear</AlertDialogAction>
+        <AlertDialogAction onClick={handleClear}>Clear</AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   );
