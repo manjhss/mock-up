@@ -2,12 +2,17 @@
 
 import { cn } from "@/lib/utils";
 import PreviewCard from "./preview-card";
+import { MockUps } from "@/zod/schema";
 
 interface PreviewListProps {
+  mockups: MockUps;
   previewCardStyle: "tile" | "card";
 }
 
-export default function PreviewList({ previewCardStyle }: PreviewListProps) {
+export default function PreviewList({
+  mockups,
+  previewCardStyle,
+}: PreviewListProps) {
   return (
     <div
       className={cn(
@@ -15,8 +20,8 @@ export default function PreviewList({ previewCardStyle }: PreviewListProps) {
         previewCardStyle === "tile" ? "grid-cols-1" : "xl:grid-cols-2",
       )}
     >
-      {Array.from({ length: 12 }).map((_, index) => (
-        <PreviewCard key={index} />
+      {mockups.map((mockup, index) => (
+        <PreviewCard key={index} mockup={mockup} />
       ))}
     </div>
   );

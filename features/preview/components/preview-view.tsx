@@ -11,12 +11,15 @@ import Icon from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Footer from "../../../components/footer";
+import { presets } from "@/data/presets";
 
 const tabs = [
   { value: "all", label: "All" },
   { value: "trending", label: "Trending" },
   { value: "minimalist", label: "Minimalist" },
 ];
+
+const mockups = presets;
 
 export default function PreviewView() {
   const [previewCardStyle, setPreviewCardStyle] = useState<"tile" | "card">(
@@ -64,7 +67,10 @@ export default function PreviewView() {
             value={tab.value}
             className={"px-2 pb-2"}
           >
-            <PreviewList previewCardStyle={previewCardStyle} />
+            <PreviewList
+              mockups={mockups}
+              previewCardStyle={previewCardStyle}
+            />
           </TabsContent>
         ))}
       </Tabs>

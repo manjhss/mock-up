@@ -14,14 +14,16 @@ import {
 import { Download01Icon } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { MockUp, Slide, Slides } from "@/zod/schema";
+import { useMockUp } from "@/store/mock-up";
 
-export default function PreviewCard() {
+export default function PreviewCard({ mockup }: { mockup: MockUp }) {
   return (
     <Card className="p-0 gap-3 bg-sidebar">
       <CardHeader className="pt-3 flex items-center justify-between">
-        <CardTitle>AutoSend</CardTitle>
+        <CardTitle>{mockup.name}</CardTitle>
         <CardAction className="flex gap-1">
-          <Link href="/sandbox/autosend">
+          <Link href={`sandbox/${mockup.nickname}`}>
             <Button>Edit</Button>
           </Link>
 
@@ -32,16 +34,16 @@ export default function PreviewCard() {
       </CardHeader>
 
       <CardContent className="bg-background h-80 p-3">
-        <Carousel />
+        <Carousel slides={mockup.slides} />
       </CardContent>
     </Card>
   );
 }
 
-export function Carousel() {
+export function Carousel({ slides }: { slides: Slides }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 5;
+  const totalSlides = slides.length;
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -82,8 +84,8 @@ export function Carousel() {
           ref={scrollRef}
           className="h-full flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] rounded-md"
         >
-          {Array.from({ length: totalSlides }).map((_, index) => (
-            <CarouselItem key={index} item={index} />
+          {slides.map((slide, index) => (
+            <CarouselItem key={index} slide={slide} index={index} />
           ))}
         </div>
       </div>
@@ -108,10 +110,18 @@ export function Carousel() {
   );
 }
 
-function CarouselItem({ item }: { item: number }) {
+function CarouselItem({ slide, index }: { slide: Slide; index: number }) {
+  const { tempMockUp } = useMockUp();
+
+  const headingContent = tempMockUp.slides[index]?.heading.content;
+  const displayContent =
+    headingContent && headingContent.trim() !== ""
+      ? headingContent
+      : slide.heading.content;
+
   return (
     <div className="h-full aspect-video bg-sidebar flex items-center justify-center rounded-md shrink-0">
-      <span className="text-4xl font-semibold">{item + 1}</span>
+      <span className="text-4xl font-semibold">{displayContent}</span>
     </div>
   );
 }
