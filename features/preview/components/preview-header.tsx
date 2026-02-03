@@ -1,5 +1,4 @@
 import Icon from "@/components/icon";
-import { ModeToggle } from "@/components/mode-toggle";
 import {
   InputGroup,
   InputGroupAddon,
@@ -8,6 +7,7 @@ import {
 
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import Image from "next/image";
+import { User } from "./user";
 
 export default function PreviewHeader() {
   return (
@@ -21,7 +21,7 @@ export default function PreviewHeader() {
         </InputGroupAddon>
       </InputGroup>
 
-      <ModeToggle />
+      <User />
     </header>
   );
 }
