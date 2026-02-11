@@ -8,14 +8,11 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Button } from "../../../components/ui/button";
-import { Separator } from "../../../components/ui/separator";
-import Icon from "../../../components/icon";
+import { Button } from "../../ui/button";
+import { Separator } from "../../ui/separator";
+import Icon from "../../icon";
 import { CleanIcon } from "@hugeicons/core-free-icons";
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-} from "../../../components/ui/alert-dialog";
+import { AlertDialog, AlertDialogTrigger } from "../../ui/alert-dialog";
 import ClearDraftDialogContent from "./clear-draft-dialog";
 import MockUpForm from "./mock-up-form/form";
 

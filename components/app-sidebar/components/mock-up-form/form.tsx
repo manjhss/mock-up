@@ -8,12 +8,12 @@ import { useUI } from "@/store/ui";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Icon from "../../../../components/icon";
+import Icon from "../../../icon";
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { useEffect, useRef } from "react";
 import MediaPicker from "./media-picker";
 import LogoPicker from "./logo-picker";
-import { useSidebar } from "../../../../components/ui/sidebar";
+import { useSidebar } from "../../../ui/sidebar";
 import { cn } from "@/lib/utils";
 
 export default function MockUpForm() {
@@ -61,7 +61,7 @@ export default function MockUpForm() {
 
       // Update the media URL for this slide
       if (values.slides[index]) {
-        values.slides[index].media.url = url;
+        values.slides[index].data.media = url;
       }
 
       // Sync to store
@@ -75,7 +75,7 @@ export default function MockUpForm() {
 
     // Update logo URL for ALL slides
     values.slides.forEach((slide) => {
-      slide.logo.content = url;
+      slide.data.logo = url;
     });
 
     // Sync to store
@@ -92,7 +92,7 @@ export default function MockUpForm() {
       <FieldGroup className="gap-2">
         <Field>
           <LogoPicker
-            value={tempMockUp.slides[0]?.logo.content || ""}
+            value={tempMockUp.slides[0]?.data?.logo || ""}
             onChange={handleLogoChange}
           />
         </Field>
@@ -130,27 +130,27 @@ export default function MockUpForm() {
               <>
                 <Field>
                   <Input
-                    id={`slides.${index}.heading.content`}
+                    id={`slides.${index}.data.heading`}
                     placeholder="Heading"
                     autoComplete="off"
-                    {...register(`slides.${index}.heading.content`)}
+                    {...register(`slides.${index}.data.heading`)}
                   />
                 </Field>
 
                 <Field>
                   <Input
-                    id={`slides.${index}.description.content`}
+                    id={`slides.${index}.data.description`}
                     placeholder="Description"
                     autoComplete="off"
-                    {...register(`slides.${index}.description.content`)}
+                    {...register(`slides.${index}.data.description`)}
                   />
                 </Field>
 
                 <Field>
                   <MediaPicker
-                    value={tempMockUp.slides[index]?.media?.url || ""}
+                    value={tempMockUp.slides[index]?.data?.media || ""}
                     onChange={handleMediaChange(index)}
-                    alt={tempMockUp.slides[index]?.media?.alt || "Slide media"}
+                    alt="Slide media"
                   />
                 </Field>
               </>

@@ -9,7 +9,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { CleanIcon } from "@hugeicons/core-free-icons";
-import Icon from "../../../components/icon";
+import Icon from "../../icon";
 import { useMockUp } from "@/store/mock-up";
 import { useUI } from "@/store/ui";
 
