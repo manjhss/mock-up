@@ -1,8 +1,8 @@
-import { useMockUp } from "@/store/mock-up";
+import { useMockUp } from "@/store/mockup";
 import { Slide, SlideComponent } from "@/zod/schema";
 import { getComponentByName } from "@/lib/component-registry";
 
-export default function SandboxCarouselItem({
+export default function AppCarouselItem({
   slide,
   index,
 }: {
@@ -25,7 +25,8 @@ export default function SandboxCarouselItem({
   const slideStyle = tempSlide?.style || slide.style || {};
 
   // Get component - either from direct reference or by name (for persisted data)
-  const Component = (slide.component || getComponentByName(slide.componentName)) as SlideComponent;
+  const Component = (slide.component ||
+    getComponentByName(slide.componentName)) as SlideComponent;
 
   // Fallback if no component is available
   if (!Component) {

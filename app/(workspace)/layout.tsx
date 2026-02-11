@@ -3,7 +3,7 @@
 import Loading from "@/components/loading";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar/components";
-import { useMockUp } from "@/store/mock-up";
+import { useMockUp } from "@/store/mockup";
 import { useResource } from "@/store/resource";
 import { useTools } from "@/store/tools";
 import { useUI } from "@/store/ui";

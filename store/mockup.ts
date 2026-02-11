@@ -1,4 +1,4 @@
-import { tempMockUp } from "@/data/temp-mock-up";
+import { tempMockUp } from "@/data/temp-mockup";
 import { MockUp, MockUps } from "@/zod/schema";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -60,7 +60,7 @@ export const useMockUp = create<Store>()(
         }),
     })),
     {
-      name: "mock-up", // localStorage key
+      name: "mockup", // localStorage key
       partialize: (state) => {
         const { isHydrated, setHydrated, resetCounter, ...rest } = state;
         return rest;

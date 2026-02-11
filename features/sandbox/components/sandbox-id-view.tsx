@@ -3,8 +3,8 @@
 import SandboxHeader from "./sandbox-header";
 import Tools from "./tools";
 import { ResourceCarousel } from "./resource-carousel";
-import { SandboxCarousel } from "./carousel";
-import { useMockUp } from "@/store/mock-up";
+import { AppCarousel } from "../../../components/app-carousel";
+import { useMockUp } from "@/store/mockup";
 import { Resources, Slides } from "@/zod/schema";
 
 export default function SandboxIdView({ id }: { id: string }) {
@@ -20,7 +20,7 @@ export default function SandboxIdView({ id }: { id: string }) {
 
       <div className="flex-13">
         <div className="h-full p-3">
-          <SandboxCarousel slides={slides} />
+          <AppCarousel slides={slides} />
         </div>
       </div>
 

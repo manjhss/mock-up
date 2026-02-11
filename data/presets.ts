@@ -1,5 +1,5 @@
 import { MockUps } from "@/zod/schema";
-import { DefaultSlide } from "@/features/sandbox/components/carousel/default-slide";
+import { DefaultSlide } from "@/data/default-slide";
 
 const background = [
   "https://imgs.search.brave.com/DZ92MZ80cbiZjMKg4-q9xnlCCL2JYSUdRANdPqiMrGw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/MDE2MjQwNzU5NjIt/MDA3ODMzZGYxYWVl/P2ZtPWpwZyZxPTYw/Jnc9MzAwMCZhdXRv/PWZvcm1hdCZmaXQ9/Y3JvcCZpeGxpYj1y/Yi00LjEuMCZpeGlk/PU0zd3hNakEzZkRC/OE1IeHpaV0Z5WTJo/OE1UWjhmR1JsYm5O/bEpUSXdabTl5WlhO/MGZHVnVmREI4ZkRC/OGZId3c",

@@ -14,7 +14,7 @@ import Icon from "../../icon";
 import { CleanIcon } from "@hugeicons/core-free-icons";
 import { AlertDialog, AlertDialogTrigger } from "../../ui/alert-dialog";
 import ClearDraftDialogContent from "./clear-draft-dialog";
-import MockUpForm from "./mock-up-form/form";
+import MockUpForm from "./mockup-form";
 
 export default function AppSidebar() {
   const { state } = useSidebar();

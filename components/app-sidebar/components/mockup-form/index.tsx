@@ -3,7 +3,7 @@
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MockUpSchema, type MockUp } from "@/zod/schema";
-import { useMockUp } from "@/store/mock-up";
+import { useMockUp } from "@/store/mockup";
 import { useUI } from "@/store/ui";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";

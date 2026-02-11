@@ -15,7 +15,7 @@ import {
 import { Download01Icon } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
 import { MockUp, Slide, Slides } from "@/zod/schema";
-import { useMockUp } from "@/store/mock-up";
+import { useMockUp } from "@/store/mockup";
 import { useTools } from "@/store/tools";
 import { useResource } from "@/store/resource";
 

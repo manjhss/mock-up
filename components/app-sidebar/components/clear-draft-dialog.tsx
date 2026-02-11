@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { CleanIcon } from "@hugeicons/core-free-icons";
 import Icon from "../../icon";
-import { useMockUp } from "@/store/mock-up";
+import { useMockUp } from "@/store/mockup";
 import { useUI } from "@/store/ui";
 
 export default function ClearDraftDialogContent() {

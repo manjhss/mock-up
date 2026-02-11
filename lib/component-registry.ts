@@ -1,4 +1,4 @@
-import { DefaultSlide } from "@/features/sandbox/components/carousel/default-slide";
+import { DefaultSlide } from "@/data/default-slide";
 import { SlideComponent } from "@/zod/schema";
 
 // Registry of available slide components

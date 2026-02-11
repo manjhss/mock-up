@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Slides } from "@/zod/schema";
 import { cn } from "@/lib/utils";
-import SandboxCarouselItem from "./sandbox-carousel-item";
+import AppCarouselItem from "./app-carousel-item";
 
-export function SandboxCarousel({ slides }: { slides: Slides }) {
+export function AppCarousel({ slides }: { slides: Slides }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = slides.length;
@@ -50,7 +50,7 @@ export function SandboxCarousel({ slides }: { slides: Slides }) {
           className="h-full flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] rounded-md"
         >
           {slides.map((slide, index) => (
-            <SandboxCarouselItem key={index} slide={slide} index={index} />
+            <AppCarouselItem key={index} slide={slide} index={index} />
           ))}
         </div>
       </div>
