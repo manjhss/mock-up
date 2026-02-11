@@ -5,45 +5,24 @@ import { z } from "zod";
 // ============================================================================
 
 /**
- * Position schema - represents x,y coordinates
- */
-export const PositionSchema = z.object({
-  x: z.number().describe("Horizontal position coordinate"),
-  y: z.number().describe("Vertical position coordinate"),
-});
-
-/**
- * Size schema - represents width and height dimensions
- */
-export const SizeSchema = z.object({
-  width: z.number().positive().describe("Width dimension (must be positive)"),
-  height: z.number().positive().describe("Height dimension (must be positive)"),
-});
-
-/**
  * Style schema - optional styling properties for elements
  */
 export const StyleSchema = z
   .object({
-    // add more styles as needed - font, shadow, etc
-    position: PositionSchema.optional().describe("Element positioning"),
-    size: SizeSchema.optional().describe("Element dimensions"),
-  })
-  .strict();
-
-// ============================================================================
-// Image Schema
-// ============================================================================
-
-/**
- * Image schema - represents an image with metadata and styling
- */
-export const ImageSchema = z
-  .object({
-    id: z.string().min(1).describe("Unique identifier for the image"),
-    url: z.string().url().describe("Valid image URL"),
-    alt: z.string().optional().describe("Alternative text for accessibility"),
-    style: StyleSchema.optional().describe("Image styling options"),
+    backgroundImage: z
+      .string()
+      .url()
+      .optional()
+      .describe("Background image URL"),
+    fontFamily: z.string().optional().describe("Font family for text elements"),
+    borderStyle: z
+      .string()
+      .optional()
+      .describe("Border style (e.g., 'solid', 'dashed')"),
+    shadowStyle: z
+      .string()
+      .optional()
+      .describe("Shadow style (e.g., '2px 2px 5px rgba(0,0,0,0.3)')"),
   })
   .strict();
 
@@ -57,19 +36,24 @@ export const ImageSchema = z
 export const SlideSchema = z
   .object({
     id: z.string().min(1).describe("Unique identifier for the slide"),
-    logo: z.object({
-      content: z.string().url().describe("Logo image URL"),
-      style: StyleSchema.optional().describe("Logo styling options"),
+    componentName: z
+      .string()
+      .optional()
+      .describe("Component identifier for persistence"),
+    component: z
+      .any()
+      .optional()
+      .describe("Component reference for rendering the slide"),
+    data: z.object({
+      logo: z.string().url().describe("Logo image URL"),
+      heading: z.string().max(200).describe("Slide heading/title"),
+      description: z
+        .string()
+        .max(1000)
+        .describe("Slide description or content"),
+      media: z.string().url().describe("Valid image URL"),
     }),
-    heading: z.object({
-      content: z.string().max(200).describe("Slide heading/title"),
-      style: StyleSchema.optional().describe("Heading text styling"),
-    }),
-    description: z.object({
-      content: z.string().max(1000).describe("Slide description or content"),
-      style: StyleSchema.optional().describe("Description text styling"),
-    }),
-    media: ImageSchema.describe("Media on the slide"),
+    style: StyleSchema.optional().describe("Styles for the slide"),
   })
   .strict();
 
@@ -80,6 +64,34 @@ export const SlidesSchema = z
   .array(SlideSchema)
   .min(1)
   .describe("Collection of slides (must have at least one)");
+
+// ============================================================================
+// Resources Schema
+// ============================================================================
+
+/**
+ * Resources schema - represents available resources for the mockup
+ */
+export const ResourcesSchema = z
+  .object({
+    background: z
+      .array(z.string().url().describe("Valid image URL"))
+      .default([])
+      .describe("Background images available for the slide"),
+    font: z
+      .array(z.string().min(1))
+      .default([])
+      .describe("Font options available for text elements"),
+    border: z
+      .array(z.string().min(1))
+      .default([])
+      .describe("Border styles available for elements"),
+    shadow: z
+      .array(z.string().min(1))
+      .default([])
+      .describe("Shadow styles available for elements"),
+  })
+  .strict();
 
 // ============================================================================
 // Preset Schema
@@ -108,14 +120,9 @@ export const MockUpSchema = z
       .optional()
       .describe("Human-readable preset name"),
     slides: SlidesSchema.describe("Collection of slides in this preset"),
-    resources: z
-      .object({
-        background: z
-          .array(ImageSchema)
-          .default([])
-          .describe("Background image on the slide"),
-      })
-      .optional(),
+    resources: ResourcesSchema.optional().describe(
+      "Available resources for the mockup",
+    ),
     tags: z
       .array(z.string().min(1))
       .default([])
@@ -135,11 +142,13 @@ export const MockUpsSchema = z
 // Type Exports (inferred from schemas)
 // ============================================================================
 
-export type Position = z.infer<typeof PositionSchema>;
-export type Size = z.infer<typeof SizeSchema>;
 export type Style = z.infer<typeof StyleSchema>;
-export type Image = z.infer<typeof ImageSchema>;
 export type Slide = z.infer<typeof SlideSchema>;
 export type Slides = z.infer<typeof SlidesSchema>;
+export type Resources = z.infer<typeof ResourcesSchema>;
 export type MockUp = z.infer<typeof MockUpSchema>;
 export type MockUps = z.infer<typeof MockUpsSchema>;
+export type SlideComponent = React.ComponentType<{
+  data: Slide["data"];
+  style: Style;
+}>;

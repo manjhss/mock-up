@@ -10,7 +10,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { useRouter } from "next/navigation";
 
-export default function SandboxHeader({ id }: { id: string }) {
+export default function SandboxHeader({ name }: { name: string }) {
   const router = useRouter();
 
   return (
@@ -20,7 +20,7 @@ export default function SandboxHeader({ id }: { id: string }) {
           <Icon icon={ArrowLeft02Icon} />
         </Button>
 
-        <CardTitle>{id}</CardTitle>
+        <CardTitle>{name}</CardTitle>
       </div>
 
       <div className="flex gap-1">

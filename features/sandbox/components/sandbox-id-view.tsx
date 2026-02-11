@@ -1,23 +1,30 @@
+"use client";
+
 import SandboxHeader from "./sandbox-header";
-import { Carousel } from "@/features/preview/components/preview-card";
 import Tools from "./tools";
-import { ToolsCarousel } from "./tools-carousel";
+import { ResourceCarousel } from "./resource-carousel";
+import { SandboxCarousel } from "./carousel";
+import { useMockUp } from "@/store/mock-up";
+import { Resources, Slides } from "@/zod/schema";
 
 export default function SandboxIdView({ id }: { id: string }) {
-  // filter id specific data from preset
-  // then render components with that data in header and main area
+  const { userMockUps } = useMockUp();
+
+  const mockUp = userMockUps.find((mockUp) => mockUp.id === id);
+  const slides = (mockUp ? mockUp.slides : []) as Slides;
+  const resource = (mockUp ? mockUp.resources : {}) as Resources;
 
   return (
     <div className="flex flex-col h-full bg-background">
-      <SandboxHeader id={id} />
+      <SandboxHeader name={mockUp ? (mockUp.name as string) : ""} />
 
       <div className="flex-13">
         <div className="h-full p-3">
-          <Carousel />
+          <SandboxCarousel slides={slides} />
         </div>
       </div>
 
-      <ToolsCarousel />
+      <ResourceCarousel resources={resource} />
       <Tools />
     </div>
   );

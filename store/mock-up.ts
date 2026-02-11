@@ -17,7 +17,7 @@ interface Actions {
   setHydrated: () => void;
   setTempMockUp: (mockUp: MockUp) => void;
   clearTempMockUp: () => void;
-  setUserMockUps: (mockUps: MockUps) => void;
+  addUserMockUp: (mockUp: MockUp) => void;
 }
 
 // Combine state and actions
@@ -54,9 +54,9 @@ export const useMockUp = create<Store>()(
           state.resetCounter += 1;
         }),
 
-      setUserMockUps: (mockUps: MockUps) =>
+      addUserMockUp: (mockUp: MockUp) =>
         set((state) => {
-          state.userMockUps = mockUps;
+          state.userMockUps.push(mockUp);
         }),
     })),
     {
