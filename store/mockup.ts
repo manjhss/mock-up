@@ -1,3 +1,4 @@
+import { preset } from "@/data/presets";
 import { tempMockUp } from "@/data/temp-mockup";
 import { MockUp, MockUps } from "@/zod/schema";
 import { create } from "zustand";
@@ -7,17 +8,21 @@ import { immer } from "zustand/middleware/immer";
 // Define your state interface
 interface State {
   isHydrated: boolean;
+  presets: MockUps; // Original preset mock-ups (read-only, always reset on load)
+  userMockups: MockUps; // User-edited mockups (persisted)
   tempMockUp: MockUp; // Temporary mock-up being edited in the sidebar
-  userMockUps: MockUps; // Recently edited mock-ups by the user
+  selectedMockUp: MockUp; // Currently selected mock-up for preview
   resetCounter: number; // Counter to trigger form reset
 }
 
 // Define your actions interface
 interface Actions {
   setHydrated: () => void;
+  setPresets: (presets: MockUps) => void;
+  addOrUpdateUserMockup: (mockup: MockUp) => void;
   setTempMockUp: (mockUp: MockUp) => void;
   clearTempMockUp: () => void;
-  addUserMockUp: (mockUp: MockUp) => void;
+  setSelectedMockUp: (mockUp: MockUp) => void;
 }
 
 // Combine state and actions
@@ -26,8 +31,10 @@ type Store = State & Actions;
 const initialState: State = {
   isHydrated: false,
   tempMockUp: tempMockUp,
-  userMockUps: [] as MockUps,
+  selectedMockUp: {} as MockUp,
   resetCounter: 0,
+  presets: preset as MockUps,
+  userMockups: [],
 };
 
 // Store with Immer and Persist middleware
@@ -41,6 +48,37 @@ export const useMockUp = create<Store>()(
       setHydrated: () =>
         set((state) => {
           state.isHydrated = true;
+          // Always reset presets to original on hydration
+          state.presets = preset as MockUps;
+
+          // Sync selectedMockUp resources with fresh preset data
+          // This ensures selectedMockUp has the latest resources after reload
+          const freshPreset = preset.find((p) => p.id === state.selectedMockUp.id);
+          if (freshPreset) {
+            state.selectedMockUp = {
+              ...state.selectedMockUp,
+              resources: freshPreset.resources,
+            };
+          }
+        }),
+
+      setPresets: (presets: MockUps) =>
+        set((state) => {
+          state.presets = presets;
+        }),
+
+      addOrUpdateUserMockup: (mockup: MockUp) =>
+        set((state) => {
+          const existingIndex = state.userMockups.findIndex(
+            (m) => m.id === mockup.id
+          );
+          if (existingIndex >= 0) {
+            // Update existing user mockup
+            state.userMockups[existingIndex] = mockup;
+          } else {
+            // Add new user mockup
+            state.userMockups.push(mockup);
+          }
         }),
 
       setTempMockUp: (mockUp: MockUp) =>
@@ -54,15 +92,17 @@ export const useMockUp = create<Store>()(
           state.resetCounter += 1;
         }),
 
-      addUserMockUp: (mockUp: MockUp) =>
+      setSelectedMockUp: (mockUp: MockUp) =>
         set((state) => {
-          state.userMockUps.push(mockUp);
+          state.selectedMockUp = mockUp;
         }),
     })),
     {
       name: "mockup", // localStorage key
       partialize: (state) => {
-        const { isHydrated, setHydrated, resetCounter, ...rest } = state;
+        // Only persist userMockups, selectedMockUp, and tempMockUp
+        // presets will always be loaded from the original import
+        const { isHydrated, setHydrated, resetCounter, presets, ...rest } = state;
         return rest;
       },
       onRehydrateStorage: () => (state) => {

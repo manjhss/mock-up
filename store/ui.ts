@@ -4,14 +4,18 @@ import { persist } from "zustand/middleware";
 // Define your state interface
 interface State {
   isHydrated: boolean;
-  expandedSlides: Set<number>;
+  expandedSlides: Set<string>;
+  slideSidebarState: "expanded" | "collapsed";
+  styleSidebarState: "expanded" | "collapsed";
 }
 
 // Define your actions interface
 interface Actions {
   setHydrated: () => void;
-  toggleSlide: (index: number) => void;
-  setExpandedSlides: (slides: Set<number>) => void;
+  toggleSlide: (id: string) => void;
+  setExpandedSlides: (slides: Set<string>) => void;
+  setSlideSidebarOpen: (open: boolean) => void;
+  setStyleSidebarOpen: (open: boolean) => void;
 }
 
 // Combine state and actions
@@ -19,7 +23,9 @@ type Store = State & Actions;
 
 const initialState: State = {
   isHydrated: false,
-  expandedSlides: new Set([0]),
+  expandedSlides: new Set<string>(),
+  slideSidebarState: "expanded",
+  styleSidebarState: "collapsed",
 };
 
 // Store with Persist middleware (no Immer for Set compatibility)
@@ -35,26 +41,44 @@ export const useUI = create<Store>()(
           isHydrated: true,
         })),
 
-      toggleSlide: (index: number) =>
+      toggleSlide: (id: string) =>
         set((state) => {
           const newSet = new Set(state.expandedSlides);
-          if (newSet.has(index)) {
-            newSet.delete(index);
+          if (newSet.has(id)) {
+            newSet.delete(id);
           } else {
-            newSet.add(index);
+            newSet.add(id);
           }
           return { expandedSlides: newSet };
         }),
 
-      setExpandedSlides: (slides: Set<number>) =>
+      setExpandedSlides: (slides: Set<string>) =>
         set(() => ({
           expandedSlides: slides,
+        })),
+
+      setSlideSidebarOpen: (open: boolean) =>
+        set(() => ({
+          slideSidebarState: open ? "expanded" : "collapsed",
+        })),
+
+      setStyleSidebarOpen: (open: boolean) =>
+        set(() => ({
+          styleSidebarState: open ? "expanded" : "collapsed",
         })),
     }),
     {
       name: "ui", // localStorage key
       partialize: (state) => {
-        const { isHydrated, setHydrated, toggleSlide, setExpandedSlides, ...rest } = state;
+        const {
+          isHydrated,
+          setHydrated,
+          toggleSlide,
+          setExpandedSlides,
+          setSlideSidebarOpen: setLeftSidebarOpen,
+          setStyleSidebarOpen: setRightSidebarOpen,
+          ...rest
+        } = state;
         return {
           ...rest,
           // Convert Set to Array for JSON serialization
@@ -66,7 +90,9 @@ export const useUI = create<Store>()(
           ...currentState,
           ...persistedState,
           // Convert Array back to Set
-          expandedSlides: new Set(persistedState?.expandedSlides || [0]),
+          expandedSlides: new Set(persistedState?.expandedSlides || []),
+          slideSidebarState: persistedState?.slideSidebarState || "expanded",
+          styleSidebarState: persistedState?.styleSidebarState || "collapsed",
         };
       },
       onRehydrateStorage: () => (state) => {
