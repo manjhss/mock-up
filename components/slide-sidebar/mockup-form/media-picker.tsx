@@ -46,8 +46,7 @@ export default function MediaPicker({
         type="button"
         onClick={handleClick}
         className={cn(
-          "relative w-full aspect-video rounded-md overflow-hidden cursor-pointer",
-          "border border-input",
+          "relative w-full aspect-video rounded-md overflow-hidden cursor-pointer bg-input",
           className,
         )}
       >

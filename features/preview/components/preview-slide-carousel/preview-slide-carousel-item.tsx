@@ -2,7 +2,7 @@ import { useMockUp } from "@/store/mockup";
 import { Slide, SlideComponent } from "@/zod/schema";
 import { getComponentByName } from "@/lib/component-registry";
 
-export default function AppCarouselItem({
+export default function PreviewSlideCarouselItem({
   slide,
   index,
 }: {

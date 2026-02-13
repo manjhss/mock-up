@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Slides } from "@/zod/schema";
 import { cn } from "@/lib/utils";
-import AppCarouselItem from "./app-carousel-item";
+import PreviewSlideCarouselItem from "./preview-slide-carousel-item";
 
-export function AppCarousel({ slides }: { slides: Slides }) {
+export function PreviewSlideCarousel({ slides }: { slides: Slides }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = slides.length;
@@ -50,7 +50,7 @@ export function AppCarousel({ slides }: { slides: Slides }) {
           className="h-full flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] rounded-md"
         >
           {slides.map((slide, index) => (
-            <AppCarouselItem key={index} slide={slide} index={index} />
+            <PreviewSlideCarouselItem key={index} slide={slide} index={index} />
           ))}
         </div>
       </div>

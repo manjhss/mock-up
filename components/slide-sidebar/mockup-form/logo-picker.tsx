@@ -2,7 +2,10 @@
 
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
-import { useSidebar } from "../../../ui/sidebar";
+import { useSidebar } from "../../ui/sidebar";
+import { Button } from "@/components/ui/button";
+import Icon from "@/components/icon";
+import { Image01Icon } from "@hugeicons/core-free-icons";
 
 interface LogoPickerProps {
   value?: string;
@@ -43,18 +46,23 @@ export default function LogoPicker({
         onChange={handleFileChange}
       />
 
-      <button
-        type="button"
-        onClick={handleClick}
-        className={cn(
-          "w-fit h-8 px-3 rounded-md border border-input cursor-pointer",
-          "text-sm text-muted-foreground",
-          isCollapsed && "ml-0.5",
-        )}
-      >
-        {!isCollapsed && (value ? "Logo selected" : "Choose logo")}
-        {isCollapsed && "L"}
-      </button>
+      {isCollapsed ? (
+        <Button size="icon" variant={"ghost"} onClick={handleClick}>
+          <Icon icon={Image01Icon} />
+        </Button>
+      ) : (
+        <button
+          type="button"
+          onClick={handleClick}
+          className={cn(
+            "w-fit h-8 px-3 rounded-md cursor-pointer",
+            "text-sm bg-input",
+            isCollapsed && "ml-0.5",
+          )}
+        >
+          {value ? "Logo selected" : "Choose logo"}
+        </button>
+      )}
     </div>
   );
 }

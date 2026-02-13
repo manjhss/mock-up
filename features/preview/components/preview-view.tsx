@@ -3,15 +3,9 @@
 import PreviewHeader from "./preview-header";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PreviewList from "./preview-list";
-import {
-  DashboardSquare01Icon,
-  LeftToRightListDashIcon,
-} from "@hugeicons/core-free-icons";
-import Icon from "@/components/icon";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+
 import Footer from "../../../components/footer";
-import { presets } from "@/data/presets";
+import { useMockUp } from "@/store/mockup";
 
 const tabs = [
   { value: "all", label: "All" },
@@ -19,12 +13,15 @@ const tabs = [
   { value: "minimalist", label: "Minimalist" },
 ];
 
-const mockups = presets;
-
 export default function PreviewView() {
-  const [previewCardStyle, setPreviewCardStyle] = useState<"tile" | "card">(
-    "tile",
-  );
+  const { presets, userMockups } = useMockUp();
+
+  // Merge original presets with user-edited mockups
+  // If a preset has been edited (exists in userMockups), use the edited version
+  const mockups = presets.map((preset) => {
+    const userEdit = userMockups.find((um) => um.id === preset.id);
+    return userEdit || preset; // Use edited version if it exists, otherwise use original
+  });
 
   return (
     <div className="flex flex-col h-full overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -41,24 +38,6 @@ export default function PreviewView() {
               ))}
             </TabsList>
           </div>
-
-          <div className="pl-2 space-x-1">
-            <Button
-              size={"icon"}
-              variant={previewCardStyle === "tile" ? "secondary" : "ghost"}
-              onClick={() => setPreviewCardStyle("tile")}
-            >
-              <Icon icon={LeftToRightListDashIcon} />
-            </Button>
-
-            <Button
-              size={"icon"}
-              variant={previewCardStyle === "card" ? "secondary" : "ghost"}
-              onClick={() => setPreviewCardStyle("card")}
-            >
-              <Icon icon={DashboardSquare01Icon} />
-            </Button>
-          </div>
         </div>
 
         {tabs.map((tab) => (
@@ -67,10 +46,7 @@ export default function PreviewView() {
             value={tab.value}
             className={"px-2 pb-2"}
           >
-            <PreviewList
-              mockups={mockups}
-              previewCardStyle={previewCardStyle}
-            />
+            <PreviewList mockups={mockups} />
           </TabsContent>
         ))}
       </Tabs>

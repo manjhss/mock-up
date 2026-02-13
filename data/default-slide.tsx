@@ -21,6 +21,8 @@ export function DefaultSlide({ data, style }: DefaultSlideProps) {
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-    ></div>
+    >
+      {data.heading}
+    </div>
   );
 }

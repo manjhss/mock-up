@@ -1,7 +1,3 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-
 import Icon from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,70 +7,98 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Download01Icon } from "@hugeicons/core-free-icons";
+import {
+  Download01Icon,
+  FullScreenIcon,
+  Cancel01Icon,
+  PaintBrush02Icon,
+} from "@hugeicons/core-free-icons";
 import { MockUp } from "@/zod/schema";
 import { useMockUp } from "@/store/mockup";
-import { useTools } from "@/store/tools";
-import { useResource } from "@/store/resource";
-import { AppCarousel } from "@/components/app-carousel";
+import { PreviewSlideCarousel } from "@/features/preview/components/preview-slide-carousel";
+import { useUI } from "@/store/ui";
+import { ButtonGroup } from "@/components/ui/button-group";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import { exportSlides } from "@/lib/export-slides";
 
 export default function PreviewCard({ mockup }: { mockup: MockUp }) {
-  const { addUserMockUp } = useMockUp();
-  const { setActiveTool } = useTools();
-  const { setSelectedResource, clearSelectedResource } = useResource();
+  const { selectedMockUp, setSelectedMockUp } = useMockUp();
+  const { setStyleSidebarOpen } = useUI();
 
-  const router = useRouter();
+  const isSelected = selectedMockUp.id === mockup.id;
 
-  const handleEdit = () => {
-    // Generate unique ID
-    const uniqueId = crypto.randomUUID();
-
-    // Create mockup with the unique ID, preserving component references and names
-    const mockupWithId: MockUp = {
-      ...mockup,
-      id: uniqueId,
-    };
-
-    // Add to store
-    addUserMockUp(mockupWithId);
-
-    // Set Active Tool to Background by default
-    setActiveTool("background");
-
-    // Check if mockup has resources and set defaults, otherwise clear all resources
-    if (mockup.resources) {
-      // Set default resources based on mockup's resources
-      setSelectedResource("background", "background-0");
-      setSelectedResource("font", "font-0");
-      setSelectedResource("border", "border-0");
-      setSelectedResource("shadow", "shadow-0");
-    } else {
-      // Clear all resources if mockup has no resources
-      clearSelectedResource("background");
-      clearSelectedResource("font");
-      clearSelectedResource("border");
-      clearSelectedResource("shadow");
-    }
-
-    // Redirect to sandbox page
-    router.push(`/sandbox/${uniqueId}`);
+  const handleClose = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click event
+    setSelectedMockUp({} as MockUp); // Deselect mockup
+    setStyleSidebarOpen(false); // Close style sidebar
   };
 
   return (
-    <Card className="p-0 gap-3 bg-sidebar">
-      <CardHeader className="pt-3 flex items-center justify-between">
+    <Card
+      className={cn(
+        "pt-2.5 pb-0 gap-3",
+        isSelected &&
+          "ring-1 ring-primary ring-offset-2 ring-offset-background",
+      )}
+    >
+      <CardHeader className="flex items-center justify-between">
         <CardTitle>{mockup.name}</CardTitle>
         <CardAction className="flex gap-1">
-          <Button onClick={handleEdit}>Edit</Button>
+          {isSelected ? (
+            <Button variant={"outline"} onClick={handleClose}>
+              <Icon icon={Cancel01Icon} />
+              Close
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setSelectedMockUp(mockup);
+                setStyleSidebarOpen(true);
+              }}
+            >
+              <Icon icon={PaintBrush02Icon} />
+              Edit
+            </Button>
+          )}
 
-          <Button size="icon" variant={"ghost"}>
-            <Icon icon={Download01Icon} />
-          </Button>
+          <ButtonGroup>
+            <Dialog>
+              <DialogTrigger>
+                <Button size="icon" variant={"ghost"} className={"rounded-md!"}>
+                  <Icon icon={FullScreenIcon} />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-[80vw]! h-[80vh] aspect-video p-3 flex flex-col overflow-hidden gap-0">
+                <DialogHeader className="py-2">
+                  <DialogTitle>Full Screen Preview</DialogTitle>
+                </DialogHeader>
+                <div className="flex-1 pt-2">
+                  <PreviewSlideCarousel slides={mockup.slides} />
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            <Button
+              size="icon"
+              variant={"ghost"}
+              className={"rounded-md!"}
+              onClick={() => exportSlides()}
+            >
+              <Icon icon={Download01Icon} />
+            </Button>
+          </ButtonGroup>
         </CardAction>
       </CardHeader>
 
       <CardContent className="bg-background h-80 p-3">
-        <AppCarousel slides={mockup.slides} />
+        <PreviewSlideCarousel slides={mockup.slides} />
       </CardContent>
     </Card>
   );

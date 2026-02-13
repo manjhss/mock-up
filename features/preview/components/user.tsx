@@ -4,13 +4,9 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { FolderLibraryIcon, UserIcon } from "@hugeicons/core-free-icons";
-import Link from "next/link";
+import { UserIcon } from "@hugeicons/core-free-icons";
 
 export function User() {
   return (
@@ -21,15 +17,6 @@ export function User() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
-        <DropdownMenuGroup>
-          <Link href="/drafts">
-            <DropdownMenuItem>
-              <Icon icon={FolderLibraryIcon} />
-              Drafts
-            </DropdownMenuItem>
-          </Link>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
         <div className="flex items-center justify-between px-2 py-1.5">
           <span className="text-sm">Theme</span>
           <ModeToggle />
