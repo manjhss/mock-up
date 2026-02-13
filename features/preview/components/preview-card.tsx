@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import Icon from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,6 +30,7 @@ import { cn } from "@/lib/utils";
 import { exportSlides } from "@/lib/export-slides";
 
 export default function PreviewCard({ mockup }: { mockup: MockUp }) {
+  const cardRef = useRef<HTMLDivElement>(null);
   const { selectedMockUp, setSelectedMockUp } = useMockUp();
   const { setStyleSidebarOpen } = useUI();
 
@@ -40,8 +42,21 @@ export default function PreviewCard({ mockup }: { mockup: MockUp }) {
     setStyleSidebarOpen(false); // Close style sidebar
   };
 
+  const handleExport = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!cardRef.current) return;
+
+    const slideElements = cardRef.current.querySelectorAll<HTMLElement>(
+      ".slide-export-item"
+    );
+    if (slideElements.length > 0) {
+      exportSlides(Array.from(slideElements));
+    }
+  };
+
   return (
     <Card
+      ref={cardRef}
       className={cn(
         "pt-2.5 pb-0 gap-3",
         isSelected &&
@@ -89,7 +104,7 @@ export default function PreviewCard({ mockup }: { mockup: MockUp }) {
               size="icon"
               variant={"ghost"}
               className={"rounded-md!"}
-              onClick={() => exportSlides()}
+              onClick={handleExport}
             >
               <Icon icon={Download01Icon} />
             </Button>

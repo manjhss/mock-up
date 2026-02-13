@@ -31,11 +31,15 @@ export default function PreviewSlideCarouselItem({
   // Fallback if no component is available
   if (!Component) {
     return (
-      <div className="h-full aspect-video bg-sidebar flex items-center justify-center rounded-md shrink-0">
+      <div className="slide-export-item h-full aspect-video bg-sidebar flex items-center justify-center rounded-md shrink-0">
         <span className="text-4xl font-semibold">{slideData.heading}</span>
       </div>
     );
   }
 
-  return <Component data={slideData} style={slideStyle} />;
+  return (
+    <div className="slide-export-item h-full aspect-video shrink-0">
+      <Component data={slideData} style={slideStyle} />
+    </div>
+  );
 }
