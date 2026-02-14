@@ -4,8 +4,6 @@ import PreviewCard from "./preview-card";
 import { MockUps } from "@/zod/schema";
 import {
   Empty,
-  EmptyContent,
-  EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
@@ -20,15 +18,12 @@ interface PreviewListProps {
 export default function PreviewList({ mockups }: PreviewListProps) {
   if (mockups.length === 0) {
     return (
-      <Empty className="h-60">
+      <Empty className="h-full">
         <EmptyHeader>
           <EmptyMedia variant="icon">
             <Icon icon={Search01Icon} />
           </EmptyMedia>
           <EmptyTitle>No mockups found</EmptyTitle>
-          <EmptyDescription>
-            Try adjusting your search or filters 
-          </EmptyDescription>
         </EmptyHeader>
       </Empty>
     );
