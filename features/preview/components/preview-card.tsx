@@ -19,13 +19,7 @@ import { useMockUp } from "@/store/mockup";
 import { PreviewSlideCarousel } from "@/features/preview/components/preview-slide-carousel";
 import { useUI } from "@/store/ui";
 import { ButtonGroup } from "@/components/ui/button-group";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { exportSlides } from "@/lib/export-slides";
 import { Spinner } from "@/components/ui/spinner";

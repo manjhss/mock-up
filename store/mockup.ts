@@ -11,7 +11,7 @@ interface State {
   presets: MockUps; // Original preset mock-ups (read-only, always reset on load)
   userMockups: MockUps; // User-edited mockups (persisted)
   tempMockUp: MockUp; // Temporary mock-up being edited in the sidebar
-  selectedMockUp: MockUp; // Currently selected mock-up for preview
+  selectedMockUp: MockUp; // Currently selected mock-up for styling and preview
   resetCounter: number; // Counter to trigger form reset
 }
 

@@ -18,8 +18,8 @@ import { Button } from "../ui/button";
 
 export default function ClearDraftDialog() {
   const { clearTempMockUp } = useMockUp();
-  const { slideSidebarState: leftSidebarState, setExpandedSlides } = useUI();
-  const isCollapsed = leftSidebarState === "collapsed";
+  const { slideSidebarState, setExpandedSlides } = useUI();
+  const isCollapsed = slideSidebarState === "collapsed";
 
   const handleClear = () => {
     clearTempMockUp();
