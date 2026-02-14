@@ -7,7 +7,7 @@ import PreviewList from "./preview-list";
 import Footer from "../../../components/footer";
 import { useMockUp } from "@/store/mockup";
 import { useUI } from "@/store/ui";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const tabs = [
   { value: "all", label: "All" },
@@ -21,24 +21,30 @@ export default function PreviewView() {
   const [activeTab, setActiveTab] = useState("all");
 
   // Merge original presets with user-edited mockups
-  // If a preset has been edited (exists in userMockups), use the edited version
-  const mockups = presets.map((preset) => {
-    const userEdit = userMockups.find((um) => um.id === preset.id);
-    return userEdit || preset; // Use edited version if it exists, otherwise use original
-  });
+  const mockups = useMemo(() => {
+    return presets.map((preset) => {
+      const userEdit = userMockups.find((um) => um.id === preset.id);
+      return userEdit || preset;
+    });
+  }, [presets, userMockups]);
 
-  const getFilteredMockups = (tabValue: string) => {
+  const filteredMockups = useMemo(() => {
     return mockups.filter((mockup) => {
+      const search = searchQuery.toLowerCase();
+      
       const matchesSearch =
-        mockup.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        mockup.nickname?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        mockup.tags?.some((tag) =>
-          tag.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-      const matchesTab = tabValue === "all" || mockup.tags?.includes(tabValue);
+        !search ||
+        mockup.name?.toLowerCase().includes(search) ||
+        mockup.nickname?.toLowerCase().includes(search) ||
+        mockup.tags?.some((tag) => tag.toLowerCase().includes(search));
+
+      const matchesTab =
+        activeTab === "all" ||
+        mockup.tags?.some((tag) => tag.toLowerCase() === activeTab.toLowerCase());
+
       return matchesSearch && matchesTab;
     });
-  };
+  }, [mockups, searchQuery, activeTab]);
 
   return (
     <div className="flex flex-col h-full overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -62,7 +68,7 @@ export default function PreviewView() {
         </div>
 
         <TabsContent value={activeTab} className={"px-2 pb-2"}>
-          <PreviewList mockups={getFilteredMockups(activeTab)} />
+          <PreviewList mockups={filteredMockups} />
         </TabsContent>
       </Tabs>
 
