@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Icon from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,11 +28,13 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { exportSlides } from "@/lib/export-slides";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function PreviewCard({ mockup }: { mockup: MockUp }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { selectedMockUp, setSelectedMockUp } = useMockUp();
   const { setStyleSidebarOpen } = useUI();
+  const [isExporting, setIsExporting] = useState(false);
 
   const isSelected = selectedMockUp.id === mockup.id;
 
@@ -42,15 +44,21 @@ export default function PreviewCard({ mockup }: { mockup: MockUp }) {
     setStyleSidebarOpen(false); // Close style sidebar
   };
 
-  const handleExport = (e: React.MouseEvent) => {
+  const handleExport = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!cardRef.current) return;
+    if (!cardRef.current || isExporting) return;
 
-    const slideElements = cardRef.current.querySelectorAll<HTMLElement>(
-      ".slide-export-item"
-    );
+    const slideElements =
+      cardRef.current.querySelectorAll<HTMLElement>(".slide-export-item");
     if (slideElements.length > 0) {
-      exportSlides(Array.from(slideElements));
+      try {
+        setIsExporting(true);
+        await exportSlides(Array.from(slideElements));
+      } catch (error) {
+        console.error("Export failed:", error);
+      } finally {
+        setIsExporting(false);
+      }
     }
   };
 
@@ -105,8 +113,9 @@ export default function PreviewCard({ mockup }: { mockup: MockUp }) {
               variant={"ghost"}
               className={"rounded-md!"}
               onClick={handleExport}
+              disabled={isExporting}
             >
-              <Icon icon={Download01Icon} />
+              {isExporting ? <Spinner /> : <Icon icon={Download01Icon} />}
             </Button>
           </ButtonGroup>
         </CardAction>
