@@ -7,6 +7,7 @@ interface State {
   expandedSlides: Set<string>;
   slideSidebarState: "expanded" | "collapsed";
   styleSidebarState: "expanded" | "collapsed";
+  searchQuery: string;
 }
 
 // Define your actions interface
@@ -16,6 +17,7 @@ interface Actions {
   setExpandedSlides: (slides: Set<string>) => void;
   setSlideSidebarOpen: (open: boolean) => void;
   setStyleSidebarOpen: (open: boolean) => void;
+  setSearchQuery: (query: string) => void;
 }
 
 // Combine state and actions
@@ -26,6 +28,7 @@ const initialState: State = {
   expandedSlides: new Set<string>(),
   slideSidebarState: "expanded",
   styleSidebarState: "collapsed",
+  searchQuery: "",
 };
 
 // Store with Persist middleware (no Immer for Set compatibility)
@@ -66,6 +69,11 @@ export const useUI = create<Store>()(
         set(() => ({
           styleSidebarState: open ? "expanded" : "collapsed",
         })),
+
+      setSearchQuery: (query: string) =>
+        set(() => ({
+          searchQuery: query,
+        })),
     }),
     {
       name: "ui", // localStorage key
@@ -77,6 +85,7 @@ export const useUI = create<Store>()(
           setExpandedSlides,
           setSlideSidebarOpen: setLeftSidebarOpen,
           setStyleSidebarOpen: setRightSidebarOpen,
+          setSearchQuery,
           ...rest
         } = state;
         return {
@@ -93,6 +102,7 @@ export const useUI = create<Store>()(
           expandedSlides: new Set(persistedState?.expandedSlides || []),
           slideSidebarState: persistedState?.slideSidebarState || "expanded",
           styleSidebarState: persistedState?.styleSidebarState || "collapsed",
+          searchQuery: "", // Don't persist search query
         };
       },
       onRehydrateStorage: () => (state) => {
