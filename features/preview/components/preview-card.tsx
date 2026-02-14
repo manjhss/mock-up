@@ -98,11 +98,8 @@ export default function PreviewCard({ mockup }: { mockup: MockUp }) {
                   <Icon icon={FullScreenIcon} />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-[80vw]! h-[80vh] aspect-video p-3 flex flex-col overflow-hidden gap-0">
-                <DialogHeader className="py-2">
-                  <DialogTitle>Full Screen Preview</DialogTitle>
-                </DialogHeader>
-                <div className="flex-1 pt-2">
+              <DialogContent className="max-w-[80vw]! h-[80vh] aspect-video">
+                <div className="pt-7">
                   <PreviewSlideCarousel slides={mockup.slides} />
                 </div>
               </DialogContent>
