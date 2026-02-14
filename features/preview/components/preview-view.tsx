@@ -7,6 +7,7 @@ import PreviewList from "./preview-list";
 import Footer from "../../../components/footer";
 import { useMockUp } from "@/store/mockup";
 import { useUI } from "@/store/ui";
+import { useState } from "react";
 
 const tabs = [
   { value: "all", label: "All" },
@@ -17,6 +18,7 @@ const tabs = [
 export default function PreviewView() {
   const { presets, userMockups } = useMockUp();
   const { searchQuery } = useUI();
+  const [activeTab, setActiveTab] = useState("all");
 
   // Merge original presets with user-edited mockups
   // If a preset has been edited (exists in userMockups), use the edited version
@@ -42,7 +44,11 @@ export default function PreviewView() {
     <div className="flex flex-col h-full overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       <PreviewHeader />
 
-      <Tabs defaultValue="all" className="flex-1 w-full bg-sidebar">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="flex-1 w-full bg-sidebar"
+      >
         <div className="p-2.25 sticky top-12.25 z-10 flex bg-sidebar">
           <div className="flex-1 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <TabsList variant={"line"}>
@@ -55,15 +61,9 @@ export default function PreviewView() {
           </div>
         </div>
 
-        {tabs.map((tab) => (
-          <TabsContent
-            key={tab.value}
-            value={tab.value}
-            className={"px-2 pb-2"}
-          >
-            <PreviewList mockups={getFilteredMockups(tab.value)} />
-          </TabsContent>
-        ))}
+        <TabsContent value={activeTab} className={"px-2 pb-2"}>
+          <PreviewList mockups={getFilteredMockups(activeTab)} />
+        </TabsContent>
       </Tabs>
 
       <Footer />
