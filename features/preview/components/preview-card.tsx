@@ -60,7 +60,7 @@ export default function PreviewCard({ mockup }: { mockup: MockUp }) {
     <Card
       ref={cardRef}
       className={cn(
-        "pt-2.5 pb-0 gap-3",
+        "pt-2.5 pb-0 gap-3 bg-sidebar",
         isSelected &&
           "ring-1 ring-primary ring-offset-2 ring-offset-background",
       )}
