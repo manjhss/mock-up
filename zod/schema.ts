@@ -15,6 +15,7 @@ export const StyleSchema = z
       .optional()
       .describe("Background image URL"),
     fontFamily: z.string().optional().describe("Font family for text elements"),
+    textColor: z.string().optional().describe("Text color for elements"),
     borderStyle: z
       .string()
       .optional()
@@ -78,6 +79,10 @@ export const ResourcesSchema = z
       .array(z.string().url().describe("Valid image URL"))
       .default([])
       .describe("Background images available for the slide"),
+    textColor: z
+      .array(z.string().min(1))
+      .default([])
+      .describe("Text color options available for text elements"),
     font: z
       .array(z.string().min(1))
       .default([])

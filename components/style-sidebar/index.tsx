@@ -15,6 +15,7 @@ import {
   BorderItem,
   FontItem,
   ShadowItem,
+  TextColorItem,
 } from "@/components/style-sidebar/resource-item";
 import { useUI } from "@/store/ui";
 import { Button } from "../ui/button";
@@ -22,10 +23,9 @@ import Icon from "../icon";
 import {
   BackgroundIcon,
   BendToolIcon,
+  DarkModeIcon,
   Image01Icon,
-  SealIcon,
   TextFontIcon,
-  TriangleIcon,
 } from "@hugeicons/core-free-icons";
 import { useMockUp } from "@/store/mockup";
 
@@ -92,6 +92,26 @@ function Content() {
                   {selectedMockUp.resources?.background.map(
                     (resource, index) => (
                       <BackgroundItem key={index} resource={resource} />
+                    ),
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+          <div className="flex gap-2 flex-col">
+            {styleCollapsed ? (
+              <Button size="icon" variant={"ghost"}>
+                <Icon icon={DarkModeIcon} />
+              </Button>
+            ) : (
+              <>
+                <div className="flex items-center">
+                  <span>Text Color</span>
+                </div>
+                <div className="h-14 flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] p-1">
+                  {selectedMockUp.resources?.textColor?.map(
+                    (resource, index) => (
+                      <TextColorItem key={index} resource={resource} />
                     ),
                   )}
                 </div>

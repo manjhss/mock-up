@@ -163,3 +163,38 @@ export function ShadowItem({ resource }: ResourceItemProps) {
     </div>
   );
 }
+
+// Text color resource item - displays color preview
+export function TextColorItem({ resource }: ResourceItemProps) {
+  const { selectedMockUp, setSelectedMockUp, addOrUpdateUserMockup } =
+    useMockUp();
+  const isSelected = selectedMockUp.slides[0].style?.textColor === resource;
+
+  return (
+    <div
+      className={`h-full aspect-square rounded-md shrink-0 cursor-pointer transition-all ${
+        isSelected
+          ? "ring-1 ring-primary ring-offset-2 ring-offset-background"
+          : ""
+      }`}
+      style={{ backgroundColor: resource }}
+      onClick={() => {
+        // Update selected mockup text color for all slides
+        const updatedMockup = {
+          ...selectedMockUp,
+          slides: selectedMockUp.slides.map((slide) => ({
+            ...slide,
+            style: {
+              ...slide.style,
+              textColor: resource,
+            },
+          })),
+        };
+
+        setSelectedMockUp(updatedMockup);
+        // Save user's edit
+        addOrUpdateUserMockup(updatedMockup);
+      }}
+    />
+  );
+}
