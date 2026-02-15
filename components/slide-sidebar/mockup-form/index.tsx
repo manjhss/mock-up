@@ -177,7 +177,12 @@ export default function MockUpForm() {
                             className="flex-1 items-center gap-2"
                             {...listeners}
                           >
-                            <h3 className={cn("p-1 font-semibold")}>
+                            <h3
+                              className={cn(
+                                "p-1 font-semibold",
+                                isCollapsed && "text-center",
+                              )}
+                            >
                               s{index + 1}
                             </h3>
                           </div>

@@ -47,7 +47,7 @@ export default function LogoPicker({
       />
 
       {isCollapsed ? (
-        <Button size="icon" variant={"ghost"} onClick={handleClick}>
+        <Button size="icon" variant={"ghost"} onClick={handleClick} className={"ml-1"}>
           <Icon icon={Image01Icon} />
         </Button>
       ) : (
