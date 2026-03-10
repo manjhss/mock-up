@@ -36,7 +36,7 @@ export default function SlideSidebar() {
 function Content() {
   return (
     <div className="space-y-4">
-      <h4 className="pt-2 text-base text-muted-foreground font-semibold">
+      <h4 className="text-base text-muted-foreground font-semibold">
         Slides
       </h4>
 
