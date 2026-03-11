@@ -7,14 +7,14 @@ interface DefaultSlideProps {
   data: Slide["data"];
   style: Style;
   slideId?: string;
-  readOnly: boolean;
+  readOnly?: boolean;
 }
 
 export function DefaultSlide({
   data,
   style,
   slideId,
-  readOnly,
+  readOnly = false,
 }: DefaultSlideProps) {
   return (
     <div
