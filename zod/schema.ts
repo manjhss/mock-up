@@ -156,4 +156,6 @@ export type MockUps = z.infer<typeof MockUpsSchema>;
 export type SlideComponent = React.ComponentType<{
   data: Slide["data"];
   style: Style;
+  slideId?: string;
+  readOnly?: boolean;
 }>;

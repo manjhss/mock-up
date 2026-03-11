@@ -15,6 +15,6 @@ export async function exportSlides(slideRefs: HTMLElement[]) {
 
   const link = document.createElement("a");
   link.href = URL.createObjectURL(zipBlob);
-  link.download = "slides.zip";
+  link.download = "mockup.zip";
   link.click();
 }

@@ -12,12 +12,12 @@ import {
 } from "@/components/ui/alert-dialog";
 import { CleanIcon } from "@hugeicons/core-free-icons";
 import Icon from "../icon";
-import { useMockUp } from "@/store/mockup";
 import { useUI } from "@/store/ui";
 import { Button } from "../ui/button";
+import { useMUp } from "@/store/mUp";
 
 export default function ClearDraftDialog() {
-  const { clearTempMockUp } = useMockUp();
+  const { clearTempMockUp } = useMUp();
   const { slideSidebarState, setExpandedSlides } = useUI();
   const isCollapsed = slideSidebarState === "collapsed";
 

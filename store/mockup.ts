@@ -1,5 +1,5 @@
 import { preset } from "@/data/presets";
-import { tempMockUp } from "@/data/temp-mockup";
+import { tempMockUp } from "@/data";
 import { MockUp, MockUps } from "@/zod/schema";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -53,7 +53,9 @@ export const useMockUp = create<Store>()(
 
           // Sync selectedMockUp resources with fresh preset data
           // This ensures selectedMockUp has the latest resources after reload
-          const freshPreset = preset.find((p) => p.id === state.selectedMockUp.id);
+          const freshPreset = preset.find(
+            (p) => p.id === state.selectedMockUp.id,
+          );
           if (freshPreset) {
             state.selectedMockUp = {
               ...state.selectedMockUp,
@@ -70,7 +72,7 @@ export const useMockUp = create<Store>()(
       addOrUpdateUserMockup: (mockup: MockUp) =>
         set((state) => {
           const existingIndex = state.userMockups.findIndex(
-            (m) => m.id === mockup.id
+            (m) => m.id === mockup.id,
           );
           if (existingIndex >= 0) {
             // Update existing user mockup
@@ -102,7 +104,8 @@ export const useMockUp = create<Store>()(
       partialize: (state) => {
         // Only persist userMockups, selectedMockUp, and tempMockUp
         // presets will always be loaded from the original import
-        const { isHydrated, setHydrated, resetCounter, presets, ...rest } = state;
+        const { isHydrated, setHydrated, resetCounter, presets, ...rest } =
+          state;
         return rest;
       },
       onRehydrateStorage: () => (state) => {

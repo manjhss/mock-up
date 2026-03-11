@@ -1,4 +1,4 @@
-import { DefaultSlide } from "@/data/default-slide";
+import { DefaultSlide } from "@/data/mockup/default/template/default-slide";
 import { SlideComponent } from "@/zod/schema";
 
 // Registry of available slide components

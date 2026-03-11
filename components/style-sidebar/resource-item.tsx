@@ -1,55 +1,68 @@
-import { useMockUp } from "@/store/mockup";
+"use client";
+
+import { useMUp } from "@/store/mUp";
+import { MockUp, Style } from "@/zod/schema";
+import Image from "next/image";
+import { useRef } from "react";
 
 interface ResourceItemProps {
   resource: string;
 }
 
+interface SlideImageProps {
+  src: string;
+}
+
 // Background resource item - displays image as background
-export function BackgroundItem({ resource }: ResourceItemProps) {
-  const { selectedMockUp, setSelectedMockUp, addOrUpdateUserMockup } =
-    useMockUp();
-  const isSelected =
-    selectedMockUp.slides[0].style?.backgroundImage === resource;
+export function BackgroundItem({ src }: SlideImageProps) {
+  const { tempMockUpStyles, updateTempMockUpStyles } = useMUp();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const isSelected = tempMockUpStyles?.backgroundImage === src;
+
+  function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const updatedTempMockUpStyles: MockUp["slides"][0]["style"] = {
+      ...tempMockUpStyles,
+      backgroundImage: url,
+    };
+    updateTempMockUpStyles(updatedTempMockUpStyles);
+  }
 
   return (
     <div
-      className={`h-full aspect-video bg-input rounded-md shrink-0 cursor-pointer transition-all ${
-        isSelected
-          ? "ring-1 ring-primary ring-offset-2 ring-offset-background"
-          : ""
+      className={`w-full h-full aspect-4/3 rounded-md shrink-0 cursor-pointer transition-all relative overflow-hidden bg-input ${
+        isSelected ? "ring-1 ring-primary ring-offset-2 ring-offset-background" : ""
       }`}
-      style={{
-        backgroundImage: `url(${resource})`,
+      style={src ? {
+        backgroundImage: `url(${src})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-      }}
-      onClick={() => {
-        // Update selected mockup background for all slides
-        const updatedMockup = {
-          ...selectedMockUp,
-          slides: selectedMockUp.slides.map((slide) => ({
-            ...slide,
-            style: {
-              ...slide.style,
-              backgroundImage: resource,
-            },
-          })),
-        };
-
-        setSelectedMockUp(updatedMockup);
-        // Save user's edit
-        addOrUpdateUserMockup(updatedMockup);
-      }}
-    />
+      } : undefined}
+      onClick={() => inputRef.current?.click()}
+    >
+      {!src && (
+        <div className="w-full h-full flex items-center justify-center text-xs text-muted-foreground">
+          Upload
+        </div>
+      )}
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleUpload}
+      />
+    </div>
   );
 }
 
 // Font resource item - displays font preview
 export function FontItem({ resource }: ResourceItemProps) {
-  const { selectedMockUp, setSelectedMockUp, addOrUpdateUserMockup } =
-    useMockUp();
-  const isSelected = selectedMockUp.slides[0].style?.fontFamily === resource;
+  const { tempMockUpStyles, updateTempMockUpStyles } = useMUp();
+  const isSelected = tempMockUpStyles?.fontFamily === resource;
 
   return (
     <div
@@ -59,21 +72,11 @@ export function FontItem({ resource }: ResourceItemProps) {
           : ""
       }`}
       onClick={() => {
-        // Update selected mockup font for all slides
-        const updatedMockup = {
-          ...selectedMockUp,
-          slides: selectedMockUp.slides.map((slide) => ({
-            ...slide,
-            style: {
-              ...slide.style,
-              fontFamily: resource,
-            },
-          })),
+        const updatedTempMockUpStyles: MockUp["slides"][0]["style"] = {
+          ...tempMockUpStyles,
+          fontFamily: resource,
         };
-
-        setSelectedMockUp(updatedMockup);
-        // Save user's edit
-        addOrUpdateUserMockup(updatedMockup);
+        updateTempMockUpStyles(updatedTempMockUpStyles);
       }}
     >
       <span
@@ -88,9 +91,8 @@ export function FontItem({ resource }: ResourceItemProps) {
 
 // Border resource item - displays border preview
 export function BorderItem({ resource }: ResourceItemProps) {
-  const { selectedMockUp, setSelectedMockUp, addOrUpdateUserMockup } =
-    useMockUp();
-  const isSelected = selectedMockUp.slides[0].style?.borderStyle === resource;
+  const { tempMockUpStyles, updateTempMockUpStyles } = useMUp();
+  const isSelected = tempMockUpStyles?.borderStyle === resource;
 
   return (
     <div
@@ -100,21 +102,11 @@ export function BorderItem({ resource }: ResourceItemProps) {
           : ""
       }`}
       onClick={() => {
-        // Update selected mockup border for all slides
-        const updatedMockup = {
-          ...selectedMockUp,
-          slides: selectedMockUp.slides.map((slide) => ({
-            ...slide,
-            style: {
-              ...slide.style,
-              borderStyle: resource,
-            },
-          })),
+        const updatedTempMockUpStyles: MockUp["slides"][0]["style"] = {
+          ...tempMockUpStyles,
+          borderStyle: resource,
         };
-
-        setSelectedMockUp(updatedMockup);
-        // Save user's edit
-        addOrUpdateUserMockup(updatedMockup);
+        updateTempMockUpStyles(updatedTempMockUpStyles);
       }}
     >
       <div
@@ -127,9 +119,8 @@ export function BorderItem({ resource }: ResourceItemProps) {
 
 // Shadow resource item - displays shadow preview
 export function ShadowItem({ resource }: ResourceItemProps) {
-  const { selectedMockUp, setSelectedMockUp, addOrUpdateUserMockup } =
-    useMockUp();
-  const isSelected = selectedMockUp.slides[0].style?.shadowStyle === resource;
+  const { tempMockUpStyles, updateTempMockUpStyles } = useMUp();
+  const isSelected = tempMockUpStyles?.shadowStyle === resource;
 
   return (
     <div
@@ -139,21 +130,11 @@ export function ShadowItem({ resource }: ResourceItemProps) {
           : ""
       }`}
       onClick={() => {
-        // Update selected mockup shadow for all slides
-        const updatedMockup = {
-          ...selectedMockUp,
-          slides: selectedMockUp.slides.map((slide) => ({
-            ...slide,
-            style: {
-              ...slide.style,
-              shadowStyle: resource,
-            },
-          })),
+        const updatedTempMockUpStyles: MockUp["slides"][0]["style"] = {
+          ...tempMockUpStyles,
+          shadowStyle: resource,
         };
-
-        setSelectedMockUp(updatedMockup);
-        // Save user's edit
-        addOrUpdateUserMockup(updatedMockup);
+        updateTempMockUpStyles(updatedTempMockUpStyles);
       }}
     >
       <div
@@ -166,9 +147,8 @@ export function ShadowItem({ resource }: ResourceItemProps) {
 
 // Text color resource item - displays color preview
 export function TextColorItem({ resource }: ResourceItemProps) {
-  const { selectedMockUp, setSelectedMockUp, addOrUpdateUserMockup } =
-    useMockUp();
-  const isSelected = selectedMockUp.slides[0].style?.textColor === resource;
+  const { tempMockUpStyles, updateTempMockUpStyles } = useMUp();
+  const isSelected = tempMockUpStyles?.textColor === resource;
 
   return (
     <div
@@ -179,21 +159,11 @@ export function TextColorItem({ resource }: ResourceItemProps) {
       }`}
       style={{ backgroundColor: resource }}
       onClick={() => {
-        // Update selected mockup text color for all slides
-        const updatedMockup = {
-          ...selectedMockUp,
-          slides: selectedMockUp.slides.map((slide) => ({
-            ...slide,
-            style: {
-              ...slide.style,
-              textColor: resource,
-            },
-          })),
+        const updatedTempMockUpStyles: MockUp["slides"][0]["style"] = {
+          ...tempMockUpStyles,
+          textColor: resource,
         };
-
-        setSelectedMockUp(updatedMockup);
-        // Save user's edit
-        addOrUpdateUserMockup(updatedMockup);
+        updateTempMockUpStyles(updatedTempMockUpStyles);
       }}
     />
   );

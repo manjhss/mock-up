@@ -1,19 +1,18 @@
 "use client";
 
-import Loading from "@/components/loading";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import SlideSidebar from "@/components/slide-sidebar";
 import StyleSidebar from "@/components/style-sidebar";
-import { useMockUp } from "@/store/mockup";
 import { useUI } from "@/store/ui";
 import { cn } from "@/lib/utils";
+import { useMUp } from "@/store/mUp";
 
 export default function WorkspaceLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isHydrated: isMockUpHydrated } = useMockUp();
+  const { isHydrated: isMockUpHydrated } = useMUp();
   const {
     isHydrated: isUIHydrated,
     slideSidebarState,
@@ -60,7 +59,5 @@ export default function WorkspaceLayout({
         </SidebarProvider>
       </div>
     </div>
-  ) : (
-    <Loading />
-  );
+  ) : null;
 }

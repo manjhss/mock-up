@@ -27,7 +27,7 @@ const initialState: State = {
   isHydrated: false,
   expandedSlides: new Set<string>(),
   slideSidebarState: "expanded",
-  styleSidebarState: "collapsed",
+  styleSidebarState: "expanded",
   searchQuery: "",
 };
 

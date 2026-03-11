@@ -29,7 +29,7 @@ export function PreviewSlideCarousel({ slides }: { slides: Slides }) {
 
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [totalSlides]);
 
   const scrollToSlide = (index: number) => {
     const container = scrollRef.current;
