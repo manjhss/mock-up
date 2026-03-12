@@ -3,7 +3,6 @@
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MockUpSchema, type MockUp } from "@/zod/schema";
-import { useMockUp } from "@/store/mockup";
 import { useUI } from "@/store/ui";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -30,12 +29,13 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableSlideItem } from "./sortable-slide-item";
+import { useMockup } from "@/store/mockup";
 
 export default function MockUpForm() {
   const { state, setOpen } = useSidebar();
   const isCollapsed = state === "collapsed";
 
-  const { tempMockUp, setTempMockUp, resetCounter } = useMockUp();
+  const { tempMockUp, resetCounter } = useMockup();
   const { expandedSlides, toggleSlide, setExpandedSlides } = useUI();
 
   const isResettingRef = useRef(false);
@@ -50,11 +50,11 @@ export default function MockUpForm() {
   useEffect(() => {
     const subscription = watch((value) => {
       if (value && !isResettingRef.current) {
-        setTempMockUp(structuredClone(value as MockUp));
+        // setTempMockUp(structuredClone(value as MockUp));
       }
     });
     return () => subscription.unsubscribe();
-  }, [watch, setTempMockUp]);
+  }, [watch]);
 
   // Reset form when clearTempMockUp is called
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function MockUpForm() {
       if (values.slides[index]) {
         values.slides[index].data.media = url;
       }
-      setTempMockUp(structuredClone(values as MockUp));
+      // setTempMockUp(structuredClone(values as MockUp));
     };
   };
 
@@ -84,7 +84,7 @@ export default function MockUpForm() {
     values.slides.forEach((slide) => {
       slide.data.logo = url;
     });
-    setTempMockUp(structuredClone(values as MockUp));
+    // setTempMockUp(structuredClone(values as MockUp));
   };
 
   const { fields: slides, move } = useFieldArray({
@@ -122,10 +122,10 @@ export default function MockUpForm() {
 
       reorderedSlides.splice(newIndex, 0, movedSlide);
 
-      setTempMockUp({
-        ...tempMockUp,
-        slides: reorderedSlides,
-      });
+      // setTempMockUp({
+      //   ...tempMockUp,
+      //   slides: reorderedSlides,
+      // });
     }
 
     // Restore previously expanded slides

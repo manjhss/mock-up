@@ -1,8 +1,7 @@
 "use client";
 
 import { useMockup } from "@/store/mockup";
-import { MockUp, Style } from "@/zod/schema";
-import Image from "next/image";
+import { MockUp } from "@/zod/schema";
 import { useRef } from "react";
 
 interface ResourceItemProps {
