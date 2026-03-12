@@ -4,10 +4,10 @@ import PreviewHeader from "./preview-header";
 
 import Footer from "../../../components/footer";
 import PreviewMockUp from "@/features/preview/components/preview-mockup";
-import { useMUp } from "@/store/mUp";
+import { useMockup } from "@/store/mockup";
 
 export default function PreviewView() {
-  const { tempMockUp } = useMUp();
+  const { tempMockUp } = useMockup();
 
   return (
     <div className="flex flex-col h-full overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">

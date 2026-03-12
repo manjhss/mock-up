@@ -3,19 +3,19 @@ import SlideImage from "@/components/slide-image";
 import { Slide, Style } from "@/zod/schema";
 import Image from "next/image";
 
-interface DefaultSlideProps {
+interface TopToBottomProps {
   data: Slide["data"];
   style: Style;
   slideId?: string;
   readOnly?: boolean;
 }
 
-export function DefaultSlide({
+export function TopToBottom({
   data,
   style,
   slideId,
   readOnly = false,
-}: DefaultSlideProps) {
+}: TopToBottomProps) {
   return (
     <div
       className="w-full h-full rounded-md flex flex-col items-center relative overflow-hidden @container-[size]"

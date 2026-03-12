@@ -10,7 +10,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "../ui/separator";
 import ClearDraftDialog from "./clear-draft-dialog";
-import { useMUp } from "@/store/mUp";
+import { useMockup } from "@/store/mockup";
 import { useUI } from "@/store/ui";
 import { slides } from "@/data";
 import PreviewSlideCarouselItem from "@/features/preview/components/preview-slide-carousel/preview-slide-carousel-item";
@@ -69,7 +69,7 @@ export default function SlideSidebar() {
 }
 
 function SlideList() {
-  const { addSlide } = useMUp();
+  const { addSlide } = useMockup();
 
   return (
     <div className="space-y-2">

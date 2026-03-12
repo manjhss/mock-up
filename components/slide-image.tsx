@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { useMUp } from "@/store/mUp";
+import { useMockup } from "@/store/mockup";
 import { Style } from "@/zod/schema";
 
 interface SlideImageProps {
@@ -18,7 +18,7 @@ export default function SlideImage({
   slideId,
   readOnly,
 }: SlideImageProps) {
-  const { updateSlideData } = useMUp();
+  const { updateSlideData } = useMockup();
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {

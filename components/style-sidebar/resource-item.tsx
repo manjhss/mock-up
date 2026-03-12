@@ -1,6 +1,6 @@
 "use client";
 
-import { useMUp } from "@/store/mUp";
+import { useMockup } from "@/store/mockup";
 import { MockUp, Style } from "@/zod/schema";
 import Image from "next/image";
 import { useRef } from "react";
@@ -15,7 +15,7 @@ interface SlideImageProps {
 
 // Background resource item - displays image as background
 export function BackgroundItem({ src }: SlideImageProps) {
-  const { tempMockUpStyles, updateTempMockUpStyles } = useMUp();
+  const { tempMockUpStyles, updateTempMockUpStyles } = useMockup();
   const inputRef = useRef<HTMLInputElement>(null);
   const isSelected = tempMockUpStyles?.backgroundImage === src;
 
@@ -33,14 +33,20 @@ export function BackgroundItem({ src }: SlideImageProps) {
   return (
     <div
       className={`w-full h-full aspect-4/3 rounded-md shrink-0 cursor-pointer transition-all relative overflow-hidden bg-input ${
-        isSelected ? "ring-1 ring-primary ring-offset-2 ring-offset-background" : ""
+        isSelected
+          ? "ring-1 ring-primary ring-offset-2 ring-offset-background"
+          : ""
       }`}
-      style={src ? {
-        backgroundImage: `url(${src})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      } : undefined}
+      style={
+        src
+          ? {
+              backgroundImage: `url(${src})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }
+          : undefined
+      }
       onClick={() => inputRef.current?.click()}
     >
       {!src && (
@@ -61,7 +67,7 @@ export function BackgroundItem({ src }: SlideImageProps) {
 
 // Font resource item - displays font preview
 export function FontItem({ resource }: ResourceItemProps) {
-  const { tempMockUpStyles, updateTempMockUpStyles } = useMUp();
+  const { tempMockUpStyles, updateTempMockUpStyles } = useMockup();
   const isSelected = tempMockUpStyles?.fontFamily === resource;
 
   return (
@@ -91,7 +97,7 @@ export function FontItem({ resource }: ResourceItemProps) {
 
 // Border resource item - displays border preview
 export function BorderItem({ resource }: ResourceItemProps) {
-  const { tempMockUpStyles, updateTempMockUpStyles } = useMUp();
+  const { tempMockUpStyles, updateTempMockUpStyles } = useMockup();
   const isSelected = tempMockUpStyles?.borderStyle === resource;
 
   return (
@@ -119,7 +125,7 @@ export function BorderItem({ resource }: ResourceItemProps) {
 
 // Shadow resource item - displays shadow preview
 export function ShadowItem({ resource }: ResourceItemProps) {
-  const { tempMockUpStyles, updateTempMockUpStyles } = useMUp();
+  const { tempMockUpStyles, updateTempMockUpStyles } = useMockup();
   const isSelected = tempMockUpStyles?.shadowStyle === resource;
 
   return (
@@ -147,7 +153,7 @@ export function ShadowItem({ resource }: ResourceItemProps) {
 
 // Text color resource item - displays color preview
 export function TextColorItem({ resource }: ResourceItemProps) {
-  const { tempMockUpStyles, updateTempMockUpStyles } = useMUp();
+  const { tempMockUpStyles, updateTempMockUpStyles } = useMockup();
   const isSelected = tempMockUpStyles?.textColor === resource;
 
   return (

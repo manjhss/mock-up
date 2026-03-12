@@ -14,10 +14,10 @@ import { CleanIcon } from "@hugeicons/core-free-icons";
 import Icon from "../icon";
 import { useUI } from "@/store/ui";
 import { Button } from "../ui/button";
-import { useMUp } from "@/store/mUp";
+import { useMockup } from "@/store/mockup";
 
 export default function ClearDraftDialog() {
-  const { clearTempMockUp } = useMUp();
+  const { clearTempMockUp } = useMockup();
   const { slideSidebarState, setExpandedSlides } = useUI();
   const isCollapsed = slideSidebarState === "collapsed";
 

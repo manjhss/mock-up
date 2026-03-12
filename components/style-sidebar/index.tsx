@@ -25,19 +25,19 @@ import {
 } from "@hugeicons/core-free-icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
-import { useMUp } from "@/store/mUp";
-import { resources } from "@/data";
+import { useMockup } from "@/store/mockup";
+import { resources, themes } from "@/data";
 
 const tabs = [
-  { value: "themes", label: "Themes" },
-  { value: "customize", label: "Customize", content: <Content /> },
+  { value: "themes", label: "Themes", content: <Themes /> },
+  { value: "customize", label: "Customize", content: <Customize /> },
 ];
 
 export default function StyleSidebar() {
   const { styleSidebarState, setStyleSidebarOpen } = useUI();
   const [activeTab, setActiveTab] = useState("themes");
 
-  const { tempMockUp } = useMUp();
+  const { tempMockUp } = useMockup();
 
   const styleCollapsed = styleSidebarState === "collapsed";
 
@@ -93,11 +93,11 @@ export default function StyleSidebar() {
   );
 }
 
-function Content() {
+function Customize() {
   const { styleSidebarState } = useUI();
   const styleCollapsed = styleSidebarState === "collapsed";
 
-  const { tempMockUpStyles } = useMUp();
+  const { tempMockUpStyles } = useMockup();
 
   return (
     <div className="space-y-4 text-[11px] font-semibold uppercase text-muted-foreground tracking-wider">
@@ -152,6 +152,37 @@ function Content() {
             </div>
           </>
         )}
+      </div>
+    </div>
+  );
+}
+
+function Themes() {
+  const { updateTempMockUpStyles } = useMockup();
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 gap-2">
+        {themes.map((theme, index) => (
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              updateTempMockUpStyles(theme.style);
+            }}
+          >
+            <div key={index} className="rounded-md overflow-hidden">
+              <img
+                src={theme.meta.img}
+                alt={theme.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <p className="py-1 px-2 text-xs font-medium tracking-wide">
+              {theme.name}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

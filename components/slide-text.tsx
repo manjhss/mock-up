@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useMUp } from "@/store/mUp";
+import { useMockup } from "@/store/mockup";
 import { MockUp } from "@/zod/schema";
 import { useEffect, useRef, useState } from "react";
 import type { ComponentProps } from "react";
@@ -13,11 +13,15 @@ const variants = {
   },
   description: {
     tag: "p" as const,
-    className: "text-[2.2cqw] opacity-85 font-sans font-normal tracking-tight leading-snug",
+    className:
+      "text-[2.2cqw] opacity-85 font-sans font-normal tracking-tight leading-snug",
   },
 };
 
-interface SlideTextProps extends Omit<ComponentProps<"h1"> & ComponentProps<"p">, "children"> {
+interface SlideTextProps extends Omit<
+  ComponentProps<"h1"> & ComponentProps<"p">,
+  "children"
+> {
   variant: keyof typeof variants;
   slideId?: string;
   field?: keyof MockUp["slides"][number]["data"];
@@ -37,7 +41,7 @@ export default function SlideText({
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(children);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const updateSlideData = useMUp((s) => s.updateSlideData);
+  const updateSlideData = useMockup((s) => s.updateSlideData);
 
   useEffect(() => {
     if (!editing) setValue(children);
@@ -88,7 +92,10 @@ export default function SlideText({
       <textarea
         ref={textareaRef}
         rows={1}
-        className={cn(baseClass, "resize-none overflow-hidden bg-transparent outline-none border-none text-center block w-[85cqw]")}
+        className={cn(
+          baseClass,
+          "resize-none overflow-hidden bg-transparent outline-none border-none text-center block w-[85cqw]",
+        )}
         style={props.style}
         value={value}
         onChange={(e) => setValue(e.target.value)}

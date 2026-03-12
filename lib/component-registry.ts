@@ -1,9 +1,9 @@
-import { DefaultSlide } from "@/data/mockup/default/template/default-slide";
+import { TopToBottom } from "@/data/slides/comp/top-to-bottom";
 import { SlideComponent } from "@/zod/schema";
 
 // Registry of available slide components
 export const componentRegistry: Record<string, SlideComponent> = {
-  DefaultSlide: DefaultSlide,
+  TopToBottom: TopToBottom,
   // Add more components here as needed
 };
 

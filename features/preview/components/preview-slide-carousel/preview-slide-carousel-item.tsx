@@ -1,6 +1,6 @@
 import { Slide, SlideComponent } from "@/zod/schema";
 import { getComponentByName } from "@/lib/component-registry";
-import { useMUp } from "@/store/mUp";
+import { useMockup } from "@/store/mockup";
 
 export default function PreviewSlideCarouselItem({
   slide,
@@ -11,7 +11,7 @@ export default function PreviewSlideCarouselItem({
   index?: number;
   readOnly?: boolean;
 }) {
-  const { tempMockUp, tempMockUpStyles } = useMUp();
+  const { tempMockUp, tempMockUpStyles } = useMockup();
 
   // Get temp data if exists
   const tempSlide = tempMockUp.slides?.[index as number];
@@ -41,7 +41,12 @@ export default function PreviewSlideCarouselItem({
 
   return (
     <div className="slide-export-item h-full aspect-video shrink-0">
-      <Component data={slideData} style={slideStyle} slideId={tempSlide?.id || slide.id} readOnly={readOnly}/>
+      <Component
+        data={slideData}
+        style={slideStyle}
+        slideId={tempSlide?.id || slide.id}
+        readOnly={readOnly}
+      />
     </div>
   );
 }

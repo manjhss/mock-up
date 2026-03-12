@@ -14,11 +14,11 @@ import { ArrowTurnForwardIcon } from "@hugeicons/core-free-icons";
 import Icon from "../icon";
 import { useUI } from "@/store/ui";
 import { Button } from "../ui/button";
-import { useMUp } from "@/store/mUp";
+import { useMockup } from "@/store/mockup";
 import { MockUp } from "@/zod/schema";
 
 export default function ResetStyleDialog() {
-  const { tempMockUp, clearTempMockUpStyles } = useMUp();
+  const { tempMockUp, clearTempMockUpStyles } = useMockup();
 
   const { styleSidebarState: rightSidebarState } = useUI();
   const isCollapsed = rightSidebarState === "collapsed";
@@ -47,7 +47,9 @@ export default function ResetStyleDialog() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={clearTempMockUpStyles}>Reset</AlertDialogAction>
+          <AlertDialogAction onClick={clearTempMockUpStyles}>
+            Reset
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

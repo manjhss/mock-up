@@ -1,26 +1,21 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-// Define your state interface
 interface State {
   isHydrated: boolean;
   expandedSlides: Set<string>;
   slideSidebarState: "expanded" | "collapsed";
   styleSidebarState: "expanded" | "collapsed";
-  searchQuery: string;
 }
 
-// Define your actions interface
 interface Actions {
   setHydrated: () => void;
   toggleSlide: (id: string) => void;
   setExpandedSlides: (slides: Set<string>) => void;
   setSlideSidebarOpen: (open: boolean) => void;
   setStyleSidebarOpen: (open: boolean) => void;
-  setSearchQuery: (query: string) => void;
 }
 
-// Combine state and actions
 type Store = State & Actions;
 
 const initialState: State = {
@@ -28,17 +23,13 @@ const initialState: State = {
   expandedSlides: new Set<string>(),
   slideSidebarState: "expanded",
   styleSidebarState: "expanded",
-  searchQuery: "",
 };
 
-// Store with Persist middleware (no Immer for Set compatibility)
 export const useUI = create<Store>()(
   persist(
     (set) => ({
-      // Initial state
       ...initialState,
 
-      // Actions
       setHydrated: () =>
         set(() => ({
           isHydrated: true,
@@ -69,42 +60,9 @@ export const useUI = create<Store>()(
         set(() => ({
           styleSidebarState: open ? "expanded" : "collapsed",
         })),
-
-      setSearchQuery: (query: string) =>
-        set(() => ({
-          searchQuery: query,
-        })),
     }),
     {
-      name: "ui", // localStorage key
-      partialize: (state) => {
-        const {
-          isHydrated,
-          setHydrated,
-          toggleSlide,
-          setExpandedSlides,
-          setSlideSidebarOpen: setLeftSidebarOpen,
-          setStyleSidebarOpen: setRightSidebarOpen,
-          setSearchQuery,
-          ...rest
-        } = state;
-        return {
-          ...rest,
-          // Convert Set to Array for JSON serialization
-          expandedSlides: Array.from(rest.expandedSlides),
-        };
-      },
-      merge: (persistedState: any, currentState) => {
-        return {
-          ...currentState,
-          ...persistedState,
-          // Convert Array back to Set
-          expandedSlides: new Set(persistedState?.expandedSlides || []),
-          slideSidebarState: persistedState?.slideSidebarState || "expanded",
-          styleSidebarState: persistedState?.styleSidebarState || "collapsed",
-          searchQuery: "", // Don't persist search query
-        };
-      },
+      name: "ui",
       onRehydrateStorage: () => (state) => {
         state?.setHydrated();
       },

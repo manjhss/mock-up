@@ -1,91 +1,69 @@
-import { preset } from "@/data/presets";
-import { tempMockUp } from "@/data";
-import { MockUp, MockUps } from "@/zod/schema";
+import { topToBottom, defaultStyles, tempMockUp } from "@/data";
+import { MockUp } from "@/zod/schema";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-// Define your state interface
 interface State {
   isHydrated: boolean;
-  presets: MockUps; // Original preset mock-ups (read-only, always reset on load)
-  userMockups: MockUps; // User-edited mockups (persisted)
-  tempMockUp: MockUp; // Temporary mock-up being edited in the sidebar
-  selectedMockUp: MockUp; // Currently selected mock-up for styling and preview
+  tempMockUp: MockUp;
+  tempMockUpStyles: MockUp["slides"][number]["style"];
   resetCounter: number; // Counter to trigger form reset
 }
 
-// Define your actions interface
 interface Actions {
   setHydrated: () => void;
-  setPresets: (presets: MockUps) => void;
-  addOrUpdateUserMockup: (mockup: MockUp) => void;
-  setTempMockUp: (mockUp: MockUp) => void;
+  addSlide: (slide: MockUp["slides"][number]) => void;
+  updateTempMockUpStyles: (styles: MockUp["slides"][number]["style"]) => void;
+  updateSlideData: (
+    slideId: string,
+    field: keyof MockUp["slides"][number]["data"],
+    value: string,
+  ) => void;
+
   clearTempMockUp: () => void;
-  setSelectedMockUp: (mockUp: MockUp) => void;
+  clearTempMockUpStyles: () => void;
 }
 
-// Combine state and actions
 type Store = State & Actions;
 
 const initialState: State = {
   isHydrated: false,
   tempMockUp: tempMockUp,
-  selectedMockUp: {} as MockUp,
+  tempMockUpStyles: defaultStyles,
   resetCounter: 0,
-  presets: preset as MockUps,
-  userMockups: [],
 };
 
-// Store with Immer and Persist middleware
-export const useMockUp = create<Store>()(
+export const useMockup = create<Store>()(
   persist(
     immer((set) => ({
-      // Initial state
       ...initialState,
 
-      // Actions
       setHydrated: () =>
         set((state) => {
           state.isHydrated = true;
-          // Always reset presets to original on hydration
-          state.presets = preset as MockUps;
-
-          // Sync selectedMockUp resources with fresh preset data
-          // This ensures selectedMockUp has the latest resources after reload
-          const freshPreset = preset.find(
-            (p) => p.id === state.selectedMockUp.id,
-          );
-          if (freshPreset) {
-            state.selectedMockUp = {
-              ...state.selectedMockUp,
-              resources: freshPreset.resources,
-            };
-          }
         }),
 
-      setPresets: (presets: MockUps) =>
+      addSlide: (slide) =>
         set((state) => {
-          state.presets = presets;
+          const updateSlide = {
+            id: `slide${state.tempMockUp.slides.length + 1}`,
+            data: topToBottom.data,
+            componentName: slide.componentName,
+            component: slide.component,
+          };
+          state.tempMockUp.slides.push(updateSlide);
         }),
 
-      addOrUpdateUserMockup: (mockup: MockUp) =>
+      updateTempMockUpStyles: (styles) =>
         set((state) => {
-          const existingIndex = state.userMockups.findIndex(
-            (m) => m.id === mockup.id,
-          );
-          if (existingIndex >= 0) {
-            // Update existing user mockup
-            state.userMockups[existingIndex] = mockup;
-          } else {
-            // Add new user mockup
-            state.userMockups.push(mockup);
-          }
+          state.tempMockUpStyles = styles;
         }),
 
-      setTempMockUp: (mockUp: MockUp) =>
+      updateSlideData: (slideId, field, value) =>
         set((state) => {
-          state.tempMockUp = mockUp;
+          const slide = state.tempMockUp.slides.find((s) => s.id === slideId);
+          if (slide) slide.data[field] = value;
         }),
 
       clearTempMockUp: () =>
@@ -94,20 +72,13 @@ export const useMockUp = create<Store>()(
           state.resetCounter += 1;
         }),
 
-      setSelectedMockUp: (mockUp: MockUp) =>
+      clearTempMockUpStyles: () =>
         set((state) => {
-          state.selectedMockUp = mockUp;
+          state.tempMockUpStyles = defaultStyles;
         }),
     })),
     {
-      name: "mockup", // localStorage key
-      partialize: (state) => {
-        // Only persist userMockups, selectedMockUp, and tempMockUp
-        // presets will always be loaded from the original import
-        const { isHydrated, setHydrated, resetCounter, presets, ...rest } =
-          state;
-        return rest;
-      },
+      name: "mockup",
       onRehydrateStorage: () => (state) => {
         state?.setHydrated();
       },

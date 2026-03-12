@@ -5,14 +5,14 @@ import SlideSidebar from "@/components/slide-sidebar";
 import StyleSidebar from "@/components/style-sidebar";
 import { useUI } from "@/store/ui";
 import { cn } from "@/lib/utils";
-import { useMUp } from "@/store/mUp";
+import { useMockup } from "@/store/mockup";
 
 export default function WorkspaceLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isHydrated: isMockUpHydrated } = useMUp();
+  const { isHydrated: isMockUpHydrated } = useMockup();
   const {
     isHydrated: isUIHydrated,
     slideSidebarState,
