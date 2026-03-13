@@ -1,16 +1,9 @@
 import SlideText from "@/components/slide-text";
 import SlideImage from "@/components/slide-image";
-import { Slide, Style } from "@/zod/schema";
 import Image from "next/image";
+import { SlideProps } from "./top-to-bottom";
 
-export interface SlideProps {
-  data: Slide["data"];
-  style: Style;
-  slideId?: string;
-  readOnly?: boolean;
-}
-
-export function TopToBottom({
+export function BottomToTop({
   data,
   style,
   slideId,
@@ -19,9 +12,7 @@ export function TopToBottom({
   return (
     <div
       className="w-full h-full rounded-md flex flex-col items-center relative overflow-hidden @container-[size]"
-      style={{
-        color: style.textColor,
-      }}
+      style={{ color: style.textColor }}
     >
       <Image
         src={style.backgroundImage!}
@@ -31,7 +22,18 @@ export function TopToBottom({
         priority
       />
 
-      <div className="text-center w-full max-w-[85cqw] mt-[3cqw] z-10 shrink-0 space-y-[1cqw]">
+      {/* flip the translate so mockup overflows top instead of bottom */}
+      <div className="absolute -top-[14cqw] w-[90cqw] h-full flex flex-col items-center rounded-[1cqw] overflow-hidden">
+        <SlideImage
+          src={data.media}
+          slideId={slideId}
+          readOnly={readOnly}
+          side="bottom"
+        />
+      </div>
+
+      {/* text at bottom */}
+      <div className="absolute bottom-0 text-center w-full max-w-[85cqw] my-[3cqw] z-10 shrink-0 space-y-[2cqw]">
         <SlideText
           variant="heading"
           style={{ fontFamily: style.fontFamily! }}
@@ -42,7 +44,6 @@ export function TopToBottom({
         >
           {data.heading}
         </SlideText>
-
         <SlideText
           variant="description"
           slideId={slideId}
@@ -52,16 +53,6 @@ export function TopToBottom({
         >
           {data.description}
         </SlideText>
-      </div>
-
-      {/* Slide Image Container */}
-      <div className="absolute top-[14cqw] w-[90cqw] h-full flex flex-col items-center rounded-[2cqw] overflow-hidden">
-        <SlideImage
-          src={data.media}
-          slideId={slideId}
-          readOnly={readOnly}
-          side="top"
-        />
       </div>
     </div>
   );

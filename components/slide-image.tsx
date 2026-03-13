@@ -3,20 +3,20 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { useMockup } from "@/store/mockup";
-import { Style } from "@/zod/schema";
+import { cn } from "@/lib/utils";
 
 interface SlideImageProps {
   src: string;
-  style: Style;
   slideId?: string;
   readOnly?: boolean;
+  side?: "top" | "bottom" | "left" | "right";
 }
 
 export default function SlideImage({
   src,
-  style,
   slideId,
   readOnly,
+  side,
 }: SlideImageProps) {
   const { updateSlideData } = useMockup();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,27 +29,15 @@ export default function SlideImage({
   }
 
   return (
-    <div
-      className="w-[90cqw] flex-1 min-h-0 rounded-[2cqw] overflow-hidden translate-y-[3cqw] relative"
-      style={{
-        border: style.borderStyle,
-        boxShadow: style.shadowStyle,
-      }}
-    >
-      {src ? (
+    <>
+      {src && (
         <Image
           src={src}
           alt="Mockup Preview"
           fill
-          className="object-cover object-top"
+          className={cn("object-cover", `object-${side}`)}
           priority
         />
-      ) : (
-        !readOnly && (
-          <div className="w-full h-full flex items-center justify-center bg-foreground/10 text-[3cqw] text-muted-foreground">
-            Click to upload
-          </div>
-        )
       )}
 
       {!readOnly && (
@@ -67,6 +55,6 @@ export default function SlideImage({
           />
         </>
       )}
-    </div>
+    </>
   );
 }

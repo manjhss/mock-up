@@ -1,9 +1,16 @@
+import { BottomToTop } from "@/data/slides/comp/bottom-to-top";
+import { LeftToRight } from "@/data/slides/comp/left-to-right";
+import { RightToLeft } from "@/data/slides/comp/right-to-left";
 import { TopToBottom } from "@/data/slides/comp/top-to-bottom";
 import { SlideComponent } from "@/zod/schema";
 
 // Registry of available slide components
 export const componentRegistry: Record<string, SlideComponent> = {
   TopToBottom: TopToBottom,
+  LeftToRight: LeftToRight,
+  RightToLeft: RightToLeft,
+  BottomToTop: BottomToTop,
+
   // Add more components here as needed
 };
 

@@ -94,7 +94,7 @@ export default function SlideText({
         rows={1}
         className={cn(
           baseClass,
-          "resize-none overflow-hidden bg-transparent outline-none border-none text-center block w-[85cqw]",
+          "w-full resize-none overflow-hidden bg-transparent outline-none border-none block",
         )}
         style={props.style}
         value={value}
@@ -108,7 +108,7 @@ export default function SlideText({
 
   return (
     <Tag
-      className={cn(baseClass, "wrap-break-word")}
+      className={cn(baseClass, "w-full wrap-break-word")}
       onDoubleClick={handleDoubleClick}
       {...props}
     >
