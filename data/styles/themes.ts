@@ -23,7 +23,7 @@ export const themes: Theme[] = [
     },
   },
   {
-    name: "Brownies",
+    name: "Chocolate",
     meta: {
       img: "https://ik.imagekit.io/manjhss/brownies.jpg?updatedAt=1773657140665",
     },

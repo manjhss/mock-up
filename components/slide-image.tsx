@@ -31,8 +31,8 @@ export default function SlideImage({
   const positions: Record<string, string> = {
     top: "object-top",
     bottom: "object-bottom",
-    left: "object-left",
-    right: "object-right",
+    left: "object-right",
+    right: "object-left",
     center: "object-center",
   };
 
