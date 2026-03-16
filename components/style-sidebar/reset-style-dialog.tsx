@@ -15,10 +15,9 @@ import Icon from "../icon";
 import { useUI } from "@/store/ui";
 import { Button } from "../ui/button";
 import { useMockup } from "@/store/mockup";
-import { MockUp } from "@/zod/schema";
 
 export default function ResetStyleDialog() {
-  const { tempMockUp, clearTempMockUpStyles } = useMockup();
+  const {  clearTempMockUpStyles } = useMockup();
 
   const { styleSidebarState: rightSidebarState } = useUI();
   const isCollapsed = rightSidebarState === "collapsed";

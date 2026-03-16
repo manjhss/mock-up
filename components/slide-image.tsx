@@ -9,7 +9,7 @@ interface SlideImageProps {
   src: string;
   slideId?: string;
   readOnly?: boolean;
-  side?: "top" | "bottom" | "left" | "right";
+  side?: string;
 }
 
 export default function SlideImage({
@@ -28,6 +28,16 @@ export default function SlideImage({
     updateSlideData(slideId, "media", url);
   }
 
+  const positions: Record<string, string> = {
+    top: "object-top",
+    bottom: "object-bottom",
+    left: "object-left",
+    right: "object-right",
+    center: "object-center",
+  };
+
+  const objectPosition = positions[side as string] || "object-center";
+
   return (
     <>
       {src && (
@@ -35,7 +45,7 @@ export default function SlideImage({
           src={src}
           alt="Mockup Preview"
           fill
-          className={cn("object-cover", `object-${side}`)}
+          className={cn("object-cover", objectPosition)}
           priority
         />
       )}

@@ -9,12 +9,12 @@ import type { ComponentProps } from "react";
 const variants = {
   heading: {
     tag: "h1" as const,
-    className: "text-[4cqw] font-semibold tracking-tighter leading-[1.05]",
+    className: "text-[3.1cqw] leading-[1.05]",
   },
   description: {
     tag: "p" as const,
     className:
-      "text-[2.2cqw] opacity-85 font-sans font-normal tracking-tight leading-snug",
+      "text-[2cqw] opacity-85 font-sans tracking leading-snug",
   },
 };
 

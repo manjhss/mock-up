@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useRef, useState } from "react";
 import Icon from "@/components/icon";
@@ -43,7 +43,7 @@ export default function PreviewMockUp({ mockup }: { mockup: MockUp }) {
       <CardHeader className="flex items-center justify-end">
         <CardAction className="flex gap-1">
           <Button
-            size="icon"
+            size={"icon"}
             variant={"ghost"}
             className={"rounded-md!"}
             onClick={handleExport}

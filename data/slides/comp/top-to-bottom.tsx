@@ -2,6 +2,7 @@ import SlideText from "@/components/slide-text";
 import SlideImage from "@/components/slide-image";
 import { Slide, Style } from "@/zod/schema";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export interface SlideProps {
   data: Slide["data"];
@@ -18,7 +19,7 @@ export function TopToBottom({
 }: SlideProps) {
   return (
     <div
-      className="w-full h-full rounded-md flex flex-col items-center relative overflow-hidden @container-[size]"
+      className="w-full h-full rounded-md border flex flex-col items-center relative overflow-hidden @container-[size]"
       style={{
         color: style.textColor,
       }}
@@ -34,11 +35,10 @@ export function TopToBottom({
       <div className="text-center w-full max-w-[85cqw] mt-[3cqw] z-10 shrink-0 space-y-[1cqw]">
         <SlideText
           variant="heading"
-          style={{ fontFamily: style.fontFamily! }}
           slideId={slideId}
           field="heading"
           readOnly={readOnly}
-          className="text-center"
+          className={cn("text-center", style.fontFamily)}
         >
           {data.heading}
         </SlideText>
@@ -55,7 +55,7 @@ export function TopToBottom({
       </div>
 
       {/* Slide Image Container */}
-      <div className="absolute top-[14cqw] w-[90cqw] h-full flex flex-col items-center rounded-[2cqw] overflow-hidden">
+      <div className={cn("absolute top-[13cqw] w-[90cqw] h-full flex flex-col items-center rounded-[1cqw] overflow-hidden", style.borderStyle)}>
         <SlideImage
           src={data.media}
           slideId={slideId}

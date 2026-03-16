@@ -6,10 +6,11 @@ import { RightToLeft } from "./comp/right-to-left";
 
 export const defaultData: Slide["data"] = {
   logo: "",
-  heading: "mockup",
-  description: "create mockup instantly",
+  heading: "title goes here",
+  description:
+    "description - by double clicking on the text, you can edit it.",
   media:
-    "https://ik.imagekit.io/manjhss/placeholder-img.png?updatedAt=1765081936295",
+    "/upload.png",
 };
 
 export const topToBottom: Slide = {

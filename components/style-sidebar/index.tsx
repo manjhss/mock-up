@@ -12,6 +12,7 @@ import { Separator } from "../ui/separator";
 import ResetStyleDialog from "./reset-style-dialog";
 import {
   BackgroundItem,
+  BorderItem,
   FontItem,
   TextColorItem,
 } from "@/components/style-sidebar/resource-item";
@@ -153,6 +154,24 @@ function Customize() {
           </>
         )}
       </div>
+      <div className="flex gap-1 flex-col">
+        {styleCollapsed ? (
+          <Button size="icon" variant={"ghost"}>
+            <Icon icon={TextFontIcon} />
+          </Button>
+        ) : (
+          <>
+            <div className="flex items-center">
+              <span>Border</span>
+            </div>
+            <div className="h-14 flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] p-1">
+              {resources?.border.map((resource, index) => (
+                <BorderItem key={index} resource={resource} />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
@@ -162,7 +181,7 @@ function Themes() {
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-3 gap-2">
         {themes.map((theme, index) => (
           <div
             className="cursor-pointer"

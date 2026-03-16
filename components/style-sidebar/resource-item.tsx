@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { useMockup } from "@/store/mockup";
 import { MockUp } from "@/zod/schema";
 import { useRef } from "react";
@@ -85,8 +86,7 @@ export function FontItem({ resource }: ResourceItemProps) {
       }}
     >
       <span
-        className="text-xl font-bold text-center"
-        style={{ fontFamily: resource }}
+        className={cn("text-xl font-bold text-center", resource)}
       >
         A
       </span>
@@ -115,8 +115,7 @@ export function BorderItem({ resource }: ResourceItemProps) {
       }}
     >
       <div
-        className="w-full h-full border-4 rounded-md"
-        style={{ borderStyle: resource }}
+        className={cn("w-full h-full")}
       />
     </div>
   );

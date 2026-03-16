@@ -3,6 +3,7 @@ import SlideImage from "@/components/slide-image";
 import Image from "next/image";
 
 import { SlideProps } from "./top-to-bottom";
+import { cn } from "@/lib/utils";
 export function LeftToRight({
   data,
   style,
@@ -11,7 +12,7 @@ export function LeftToRight({
 }: SlideProps) {
   return (
     <div
-      className="w-full h-full rounded-md flex flex-row items-center relative overflow-hidden @container-[size]"
+      className="w-full h-full rounded-md border flex flex-row items-center relative overflow-hidden @container-[size]"
       style={{ color: style.textColor }}
     >
       <Image
@@ -23,14 +24,13 @@ export function LeftToRight({
       />
 
       {/* text left */}
-      <div className="z-10 shrink-0 space-y-[1cqw] ml-[5cqw] w-full max-w-[36cqw]">
+      <div className="z-10 shrink-0 space-y-[1cqw] ml-[5cqw] w-full max-w-[42cqw]">
         <SlideText
           variant="heading"
-          style={{ fontFamily: style.fontFamily! }}
           slideId={slideId}
           field="heading"
           readOnly={readOnly}
-          className="text-start"
+          className={cn("text-start", style.fontFamily)}
         >
           {data.heading}
         </SlideText>
@@ -46,12 +46,12 @@ export function LeftToRight({
       </div>
 
       {/* image right */}
-      <div className="absolute top-[6cqw] -right-[46cqw] w-full h-full flex flex-col justify-center rounded-[2cqw] overflow-hidden">
+      <div className={cn("absolute top-[5cqw] -right-[52cqw] w-full h-full flex flex-col justify-center rounded-[1cqw] overflow-hidden", style.borderStyle)}>
         <SlideImage
           src={data.media}
           slideId={slideId}
           readOnly={readOnly}
-          side="left"
+          side="right"
         />
       </div>
     </div>
