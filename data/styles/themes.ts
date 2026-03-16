@@ -31,7 +31,7 @@ export const themes: Theme[] = [
       backgroundImage:
         "https://ik.imagekit.io/manjhss/brownies.jpg?updatedAt=1773657140665",
       textColor: "#FFFFFF",
-      fontFamily: "font-ramaraja",
+      fontFamily: "font-sedan",
       borderStyle: "shadow-xl",
     },
   },
