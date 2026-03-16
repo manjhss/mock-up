@@ -22,4 +22,17 @@ export const themes: Theme[] = [
       borderStyle: "shadow-xl",
     },
   },
+  {
+    name: "Brownies",
+    meta: {
+      img: "https://ik.imagekit.io/manjhss/brownies.jpg?updatedAt=1773657140665",
+    },
+    style: {
+      backgroundImage:
+        "https://ik.imagekit.io/manjhss/brownies.jpg?updatedAt=1773657140665",
+      textColor: "#FFFFFF",
+      fontFamily: "font-ramaraja",
+      borderStyle: "shadow-xl",
+    },
+  },
 ];

@@ -2,7 +2,7 @@ import { Slide, SlideComponent } from "@/zod/schema";
 import { getComponentByName } from "@/lib/component-registry";
 import { useMockup } from "@/store/mockup";
 import { cn } from "@/lib/utils";
-import { metamorphous, pacifico, YoungSerif } from "@/data";
+import { pacifico, ramaraja } from "@/data";
 import { GeistPixelSquare } from "geist/font/pixel";
 
 export default function PreviewSlideCarouselItem({
@@ -46,10 +46,9 @@ export default function PreviewSlideCarouselItem({
     <div
       className={cn(
         "slide-export-item h-full aspect-video shrink-0",
-        YoungSerif.variable,
         GeistPixelSquare.variable,
-        pacifico.variable
-        , metamorphous.variable
+        pacifico.variable,
+        ramaraja.variable,
       )}
     >
       <Component

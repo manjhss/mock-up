@@ -1,5 +1,5 @@
 import { Resources } from "@/zod/schema";
-import { Pacifico, Young_Serif, Metamorphous } from "next/font/google";
+import { Pacifico, Ramaraja } from "next/font/google";
 
 export const pacifico = Pacifico({
   variable: "--font-pacifico",
@@ -7,21 +7,15 @@ export const pacifico = Pacifico({
   weight: "400",
 });
 
-export const YoungSerif = Young_Serif({
-  variable: "--font-young-serif",
-  subsets: ["latin"],
-  weight: "400",
-});
-
-export const metamorphous = Metamorphous({
-  variable: "--font-metamorphous",
+export const ramaraja = Ramaraja({
+  variable: "--font-ramaraja",
   subsets: ["latin"],
   weight: "400",
 });
 
 export const background = ["/green.jpg"];
 export const textColor = ["#000000", "#FFFFFF"];
-export const font = ["font-pacifico"];
+export const font = ["font-pacifico", "font-ramaraja"];
 export const border = [
   "shadow-xl", // Default
   "border-[0.8cqw] border-white/40 shadow-[inset_0_2px_10px_rgba(255,255,255,0.8),0_4px_15px_rgba(0,0,0,0.1)] backdrop-blur-md", // Glass Light
