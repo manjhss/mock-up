@@ -19,9 +19,9 @@ export const metamorphous = Metamorphous({
   weight: "400",
 });
 
-export const background = ["/green.jpg", "/dark-blue.jpg", "/orange.jpg"];
+export const background = ["/green.jpg"];
 export const textColor = ["#000000", "#FFFFFF"];
-export const font = ["font-metamorphous", "font-pacifico"];
+export const font = ["font-pacifico"];
 export const border = [
   "shadow-xl", // Default
   "border-[0.8cqw] border-white/40 shadow-[inset_0_2px_10px_rgba(255,255,255,0.8),0_4px_15px_rgba(0,0,0,0.1)] backdrop-blur-md", // Glass Light

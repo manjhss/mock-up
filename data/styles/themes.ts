@@ -10,16 +10,16 @@ interface Theme {
 
 export const themes: Theme[] = [
   {
-    name: "Mint",
+    name: "Candy",
     meta: {
-      img: "https://ik.imagekit.io/manjhss/placeholder-img.png?updatedAt=1765081936295",
+      img: "https://ik.imagekit.io/manjhss/pexels-codioful-7130474.jpg",
     },
     style: {
-      backgroundImage: "/green.jpg",
+      backgroundImage:
+        "https://ik.imagekit.io/manjhss/pexels-codioful-7130474.jpg",
       textColor: "#000000",
-      fontFamily: "font-serif",
-      borderStyle: "",
-      shadowStyle: "",
+      fontFamily: "font-pacifico",
+      borderStyle: "shadow-xl",
     },
   },
 ];
