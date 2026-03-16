@@ -2,7 +2,7 @@ import { Slide, SlideComponent } from "@/zod/schema";
 import { getComponentByName } from "@/lib/component-registry";
 import { useMockup } from "@/store/mockup";
 import { cn } from "@/lib/utils";
-import { pacifico, sedan } from "@/data";
+import { pacifico, pixelSquare, sedan } from "@/data";
 import { GeistPixelSquare } from "geist/font/pixel";
 
 export default function PreviewSlideCarouselItem({
@@ -49,6 +49,7 @@ export default function PreviewSlideCarouselItem({
         GeistPixelSquare.variable,
         pacifico.variable,
         sedan.variable,
+        pixelSquare.variable
       )}
     >
       <Component

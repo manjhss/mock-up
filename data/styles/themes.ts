@@ -25,13 +25,25 @@ export const themes: Theme[] = [
   {
     name: "Chocolate",
     meta: {
-      img: "https://ik.imagekit.io/manjhss/brownies.jpg?updatedAt=1773657140665",
+      img: "https://ik.imagekit.io/manjhss/brownies.jpg",
     },
     style: {
       backgroundImage:
-        "https://ik.imagekit.io/manjhss/brownies.jpg?updatedAt=1773657140665",
+        "https://ik.imagekit.io/manjhss/brownies.jpg",
       textColor: "#FFFFFF",
       fontFamily: "font-sedan",
+      borderStyle: "shadow-xl",
+    },
+  },
+  {
+    name: "Rainbowie",
+    meta: {
+      img: "https://ik.imagekit.io/manjhss/pixel_rainbow",
+    },
+    style: {
+      backgroundImage: "https://ik.imagekit.io/manjhss/pixel_rainbow",
+      textColor: "#000000",
+      fontFamily: "font-pixelify-sans",
       borderStyle: "shadow-xl",
     },
   },
